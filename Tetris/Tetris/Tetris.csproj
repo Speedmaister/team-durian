@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="scripts\engine.js" />
     <Content Include="scripts\object.js" />
     <Content Include="scripts\script.js" />
     <Content Include="Web.config" />
