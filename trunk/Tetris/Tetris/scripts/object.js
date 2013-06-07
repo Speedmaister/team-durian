@@ -67,12 +67,12 @@
     });
 
     return {
-        I: FigureI,
-        J: FigureJ,
-        L: FigureL,
-        T: FigureT,
-        O: FigureO,
-        S: FigureS,
-        Z: FigureZ,
+        I: new FigureI(),
+        J: new FigureJ(),
+        L:new FigureL(),
+        T: new FigureT(),
+        O: new FigureO(),
+        S: new FigureS(),
+        Z: new FigureZ(),
     }
-} ());
+}());
