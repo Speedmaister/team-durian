@@ -69,10 +69,11 @@
     return {
         I: new FigureI(),
         J: new FigureJ(),
-        L:new FigureL(),
+        L: new FigureL(),
         T: new FigureT(),
         O: new FigureO(),
         S: new FigureS(),
-        Z: new FigureZ(),
+        Z: new FigureZ()
     }
 }());
+
