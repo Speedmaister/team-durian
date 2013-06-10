@@ -1,2 +1,60 @@
-﻿body {
+﻿body, div, ul, li, table, tr, td {
+    padding: 0;
+    margin: 0;
+}
+
+#container {
+    padding: 20px;
+    width: 420px;
+    height: 605px;
+    background-color: red;
+}
+
+ul#statsContainer {
+    float: right;
+    list-style-type: none;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+div#tableContainer {
+    width: 300px;
+    height: 600px;
+    background-color: blue;
+    float: left;
+}
+
+li#nextFigureContainer {
+    width: 100px;
+    height: 100px;
+    background-color: green;
+}
+
+li#scoreContainer {
+    width: 100px;
+    height: 50px;
+    background-color: orange;
+}
+
+li#levelContainer {
+    width: 100px;
+    height: 50px;
+    background-color: purple;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+tr {
+    border: none;
+}
+
+td {
+    background-color:pink;
+    width:30px;
+    height:30px;
 }
