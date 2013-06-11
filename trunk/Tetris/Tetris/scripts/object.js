@@ -76,25 +76,25 @@
 
     return {
         createFigureI: function () {
-            new FigureI();
+            return new FigureI();
         },
         createFigureJ: function () {
-            new FigureJ()
+            return new FigureJ()
         },
         createFigureL: function () {
-            new FigureL()
+            return new FigureL()
         },
         createFigureT: function () {
-            new FigureT()
+            return new FigureT()
         },
         createFigureO: function () {
-            new FigureO()
+            return new FigureO()
         },
         createFigureS: function () {
-            new FigureS()
+            return new FigureS()
         },
         createFigureZ: function () {
-            new FigureZ()
+            return new FigureZ()
         },
     }
 }());
