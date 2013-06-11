@@ -9,8 +9,6 @@ var Engine = (function () {
     var MatrixNextFigureRows = 5;
     var MatrixNextFigureCols = 5;
 
-
-
     this.container = $("#container");
     this.tableContainer = $("<div>");
     this.tableContainer.attr("id", "tableContainer");
@@ -19,15 +17,12 @@ var Engine = (function () {
 
     this.nextFigureContainer = $("<li>");
     this.nextFigureContainer.attr("id", "nextFigureContainer");
-
     this.scoreContainer = $("<li>");
     this.scoreContainer.attr("id", "scoreContainer");
-
     this.levelContainer = $("<li>");
     this.levelContainer.attr("id", "levelContainer");
 
     this.statsContainer.append(this.nextFigureContainer, this.scoreContainer, this.levelContainer);
-
     this.container.append(this.tableContainer, this.statsContainer);
 
     this.matrix = [];
