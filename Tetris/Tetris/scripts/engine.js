@@ -48,7 +48,6 @@ var Engine = (function () {
             var tr = $("<tr>");
             for (j = 0; j < cols; j++) {
                 var td = $("<td>");
-                td.addClass("empty");
                 td.appendTo(tr);
             }
 
