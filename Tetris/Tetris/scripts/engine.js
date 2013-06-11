@@ -62,18 +62,19 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        var I = figureNS.createFigureI();
-        var tr = this.table.children()[0].childNodes[0];
-        for (var i = 0; i < I.form[0].length; i++) {
-            this.matrix[0][i] = I.form[0][i];
-            var td = tr.childNodes[i];
-            if (td.className == "empty") {
-                td.className = "filled";
+        var figure = figureNS.createFigureJ();
+        var allTr = this.table.children()[0].childNodes;
+        for (var j = 0; j < 2; j++) {
+            for (var i = 0; i < figure.form[j].length; i++) {
+                this.matrix[j][i] = figure.form[j][i];
+                var td = allTr[j].childNodes[i];
+                if (td.className == "empty") {
+                    td.className = "filled";
+                }
             }
         }
 
         var i = 0;
-        var allTr = this.table.children()[0].childNodes;
         setInterval(function () {
             for (var j = 0; j < this.matrix[0].length; j++) {
                 this.matrix[i + 1][j] = this.matrix[i][j];
