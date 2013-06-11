@@ -62,13 +62,6 @@ var Engine = (function () {
         var row = 0;
         var col = 0;
 
-        function drawFieldToConsole() {
-            for (var i = 0; i < this.matrix.length; i++) {
-                console.log(this.matrix[i]);
-            }
-            console.log();
-        }
-
         var currentRow = 0;
         setInterval(function () {
 
@@ -77,8 +70,8 @@ var Engine = (function () {
                     this.matrix[currentRow + row][figPosition + col] = 0;
                 }
             }
+
             currentRow++;
-            figPosition--;
             for (row = 0; row < figure.form.length; row++) {
                 for (col = 0; col < figure.form[row].length; col++) {
                     this.matrix[currentRow + row][figPosition + col] = figure.form[row][col];
