@@ -56,7 +56,7 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        var figure = figureNS.createFigure();
+        var figure = figureNS.createFigureI();
         figure.rotate();
         var figPosition = MatrixCols / 2;
         var row = 0;
@@ -110,7 +110,7 @@ var Engine = (function () {
     }
 
     function clearCells(table) {
-        table.$("td").css("background-color", "white");
+        $("td",table).css("background-color", "white");
     }
 
     function renderMatrix(matrix, table) {
