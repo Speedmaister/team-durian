@@ -58,3 +58,17 @@ td {
     width:30px;
     height:30px;
 }
+
+#nextFigureContainer table tr .empty{
+    background: yellow;
+    height: 20px;
+}
+
+
+
+
+
+
+
+
+
