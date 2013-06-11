@@ -63,23 +63,31 @@ var Engine = (function () {
         var col = 0;
 
         var currentRow = 0;
-        setInterval(function () {
+        var intervalId = setInterval(function () {
 
-            for (row = 0; row < figure.form.length; row++) {
-                for (col = 0; col < figure.form[row].length; col++) {
-                    this.matrix[currentRow + row][figPosition + col] = 0;
+            if (figure.form.length + currentRow < MatrixRows) {
+                for (row = 0; row < figure.form.length; row++) {
+                    for (col = 0; col < figure.form[row].length; col++) {
+                        this.matrix[currentRow + row][figPosition + col] = 0;
+                    }
                 }
-            }
 
-            currentRow++;
-            for (row = 0; row < figure.form.length; row++) {
-                for (col = 0; col < figure.form[row].length; col++) {
-                    this.matrix[currentRow + row][figPosition + col] = figure.form[row][col];
+                currentRow++;
+                for (row = figure.form.length - 1; row >= 0; row--) {
+                    for (col = figure.form[row].length - 1; col >= 0; col--) {
+                        if (figure.form[row][col] != 0) {
+                            this.matrix[currentRow + row][figPosition + col] = figure.form[row][col];
+                        }
+                    }
                 }
+
+                renderMatrix(this.matrix, this.table);
             }
-            renderMatrix(this.matrix, this.table);
-            
-        }, 1000);
+            else {
+                clearInterval(intervalId);
+                dropFigure();
+            }
+        }, 10)
     })();
 
     this.nextFigureMatrix = [];
