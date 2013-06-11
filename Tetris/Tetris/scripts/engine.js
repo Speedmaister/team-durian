@@ -83,9 +83,21 @@ var Engine = (function () {
     })();
 
     this.nextFigureMatrix = [];
-    initializeMatrix(this.nextFigureMatrix, MatrixNextFigureRows, MatrixNextFigureCols);
+
+    var currentFigure = figureNS.createRandomFigure();
+    initializeMatrix(this.nextFigureMatrix, MatrixNextFigureRows, MatrixNextFigureCols);  
     this.nextFigTablle = $("<table>");
+    var topLeft = [(this.nextFigureMatrix[0].length - currentFigure.form[0].length) / 2 | 0,
+        (this.nextFigureMatrix.length - currentFigure.form.length) / 2 | 0];
+    for (var i = 0; i < currentFigure.form.length; i++) {
+        for (var j = 0; j < currentFigure.form[i].length; j++) {
+            this.nextFigureMatrix[i+topLeft[1]][j+ topLeft[0]] = currentFigure.form[i][j];
+        }
+    }
+
     initializeTable(this.nextFigTablle, MatrixNextFigureRows, MatrixNextFigureCols);
+    renderMatrix(this.nextFigureMatrix, this.nextFigTablle);
+
     this.nextFigureContainer.append(this.nextFigTablle);
 
     function clearCells(table) {
