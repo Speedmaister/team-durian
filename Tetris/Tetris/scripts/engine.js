@@ -62,27 +62,28 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-       var I = figureNS.createFigureI();
-        this.table.class
-        var tr = $(this.table.children()[0]).children();
+        var I = figureNS.createFigureI();
+        var tr = this.table.children()[0].childNodes[0];
         for (var i = 0; i < I.form[0].length; i++) {
             this.matrix[0][i] = I.form[0][i];
-            var td = $($(tr[0]).children()[i]);
-            td.removeClass("empty");
-            td.addClass("filled");
+            var td = tr.childNodes[i];
+            if (td.className == "empty") {
+                td.className = "filled";
+            }
         }
+
         var i = 0;
+        var allTr = this.table.children()[0].childNodes;
         setInterval(function () {
-            var tr = $(this.table.children()[0]).children()[i];
             for (var j = 0; j < this.matrix[0].length; j++) {
                 this.matrix[i + 1][j] = this.matrix[i][j];
                 this.matrix[i][j] = 0;
-                var td = $($(tr[i]).children()[j]);
-                td.addClass("empty");
-                td.removeClass("filled");
-                var td = $($(tr[i+1]).children()[j]);
-                td.removeClass("empty");
-                td.addClass("filled");
+                var td = allTr[i].childNodes[j];
+                var nextTd = allTr[i + 1].childNodes[j];
+                if (td.className == "filled") {
+                    td.className = "empty";
+                    nextTd.className = "filled";
+                }
             }
             i++;
         }, 1000);
@@ -94,17 +95,17 @@ var Engine = (function () {
     initializeTable(this.nextFigTablle, MatrixNextFigureRows, MatrixNextFigureCols);
     this.nextFigureContainer.append(this.nextFigTablle);
 
-   function generateRandomFigure() {
-       var randomIndex = Math.random() * 7 | 0;
-       switch (randomIndex) {
-           case 0: return figureNS.createFigureI();
-           case 1: return figureNS.createFigureJ();
-           case 2: return figureNS.createFigureL();
-           case 3: return figureNS.createFigureT();
-           case 4: return figureNS.createFigureO();
-           case 5: return figureNS.createFigureS();
-           case 6: return figureNS.createFigureZ();
-           default: throw { message: "Cannot generate random figure" };
-       }
-   }
+    function generateRandomFigure() {
+        var randomIndex = Math.random() * 7 | 0;
+        switch (randomIndex) {
+            case 0: return figureNS.createFigureI();
+            case 1: return figureNS.createFigureJ();
+            case 2: return figureNS.createFigureL();
+            case 3: return figureNS.createFigureT();
+            case 4: return figureNS.createFigureO();
+            case 5: return figureNS.createFigureS();
+            case 6: return figureNS.createFigureZ();
+            default: throw { message: "Cannot generate random figure" };
+        }
+    }
 })()
