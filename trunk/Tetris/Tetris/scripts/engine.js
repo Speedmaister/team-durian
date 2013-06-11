@@ -62,15 +62,20 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        var figure = figureNS.createFigureJ();
+        var figure = figureNS.createFigureT();
+        figure.rotate();
+        
         var allTr = this.table.children()[0].childNodes;
-        for (var j = 0; j < 2; j++) {
+        for (var j = 0; j < figure.form.length; j++) {
             for (var i = 0; i < figure.form[j].length; i++) {
                 this.matrix[j][i] = figure.form[j][i];
-                var td = allTr[j].childNodes[i];
-                if (td.className == "empty") {
-                    td.className = "filled";
+                if (figure.form[j][i]!=0) {
+                    var td = allTr[j].childNodes[i];
+                    if (td.className == "empty") {
+                        td.className = "filled";
+                    }
                 }
+                
             }
         }
 
