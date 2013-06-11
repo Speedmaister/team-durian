@@ -27,7 +27,7 @@
 
     var FigureI = $.inherit(Figure, {
         __constructor: function () {
-            var form = [[1, 1, 1, 1]];
+            var form = [["I", "I", "I", "I"]];
             this.__base(form);
         }
     });

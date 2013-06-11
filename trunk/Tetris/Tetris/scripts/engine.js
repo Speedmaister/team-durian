@@ -56,23 +56,36 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        var figure = figureNS.createFigureT();
+        var figure = figureNS.createFigure();
         figure.rotate();
         var figPosition = MatrixCols / 2;
         var row = 0;
         var col = 0;
 
-        // set figure in the top middle of the matrix
-        for (row = 0; row < figure.length; row++) {
-            for (col = 0; col < figure[row].length; col++) {
-                this.matrix[row][figPosition + col];
+        function drawFieldToConsole() {
+            for (var i = 0; i < this.matrix.length; i++) {
+                console.log(this.matrix[i]);
             }
+            console.log();
         }
 
-
+        var currentRow = 0;
         setInterval(function () {
 
-
+            for (row = 0; row < figure.form.length; row++) {
+                for (col = 0; col < figure.form[row].length; col++) {
+                    this.matrix[currentRow + row][figPosition + col] = 0;
+                }
+            }
+            currentRow++;
+            figPosition--;
+            for (row = 0; row < figure.form.length; row++) {
+                for (col = 0; col < figure.form[row].length; col++) {
+                    this.matrix[currentRow + row][figPosition + col] = figure.form[row][col];
+                }
+            }
+            renderMatrix(this.matrix, this.table);
+            
         }, 1000);
     })();
 
