@@ -6,6 +6,10 @@ var Engine = (function () {
     //Constants
     var MatrixRows = 20;
     var MatrixCols = 10;
+    var MatrixNextFigureRows = 5;
+    var MatrixNextFigureCols = 5;
+    
+
 
     this.container = $("#container");
     this.tableContainer = $("<div>");
@@ -27,24 +31,27 @@ var Engine = (function () {
     this.container.append(this.tableContainer,this.statsContainer);
 
     this.matrix = [];
-    initializeMatrix(this.matrix);
+    initializeMatrix(this.matrix,MatrixRows,MatrixCols);
 
     this.table = $("<table>");
-    initializeTable(this.table);
+    initializeTable(this.table,MatrixRows,MatrixCols);
     this.tableContainer.append(this.table);
 
-    function initializeMatrix(matrix) {
+    function initializeMatrix(matrix,rows,cols) {
         var i;
-        for (i = 0; i < MatrixRows; i++) {
+        for (i = 0; i < rows; i++) {
             matrix.push([]);
+            for (var j = 0; j < cols; j++) {
+                matrix[i].push(0);
+            }
         }
     }
 
-    function initializeTable(table) {
+    function initializeTable(table,rows,cols) {
         var i, j;
-        for (i = 0; i < MatrixRows; i++) {
+        for (i = 0; i < rows; i++) {
             var tr = $("<tr>");
-            for (j = 0; j < MatrixCols; j++) {
+            for (j = 0; j < cols; j++) {
                 var td = $("<td>");
                 td.addClass("empty");
                 td.appendTo(tr);
@@ -54,7 +61,7 @@ var Engine = (function () {
         }
     }
 
-    function dropFigure() {
+   function dropFigure() {
         var I = new figureNS.I();
         for (var i = 0; i < I.form[0].length; i++) {
             this.matrix[0][i] = I.form[0][i];
@@ -67,4 +74,6 @@ var Engine = (function () {
             }
         }, 1000);
     }
+    //this.nextFigureMatrix = [];
+    //initializeMatrix(this.nextFigureContainer,)
 })()
