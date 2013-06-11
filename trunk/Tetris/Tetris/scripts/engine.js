@@ -78,7 +78,7 @@ var Engine = (function () {
 
         setInterval(function () {
 
-            
+
         }, 1000);
     })();
 
@@ -119,7 +119,7 @@ var Engine = (function () {
         td = $(td);
         switch (color) {
             case 'I':
-                td.css("background-color","lightblue");
+                td.css("background-color", "lightblue");
                 break;
             case 'J':
                 td.css("background-color", "blue");
