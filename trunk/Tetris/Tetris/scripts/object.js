@@ -75,13 +75,27 @@
     });
 
     return {
-        I: FigureI,
-        J: FigureJ,
-        L: FigureL,
-        T: FigureT,
-        O: FigureO,
-        S: FigureS,
-        Z: FigureZ
+        createFigureI: function () {
+            new FigureI();
+        },
+        createFigureJ: function () {
+            new FigureJ()
+        },
+        createFigureL: function () {
+            new FigureL()
+        },
+        createFigureT: function () {
+            new FigureT()
+        },
+        createFigureO: function () {
+            new FigureO()
+        },
+        createFigureS: function () {
+            new FigureS()
+        },
+        createFigureZ: function () {
+            new FigureZ()
+        },
     }
 }());
 

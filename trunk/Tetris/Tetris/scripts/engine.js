@@ -62,7 +62,7 @@ var Engine = (function () {
     }
 
    function dropFigure() {
-        var I = new figureNS.I();
+       var I = figureNS.createFigureI();
         for (var i = 0; i < I.form[0].length; i++) {
             this.matrix[0][i] = I.form[0][i];
         }
@@ -76,4 +76,18 @@ var Engine = (function () {
     }
     //this.nextFigureMatrix = [];
     //initializeMatrix(this.nextFigureContainer,)
+
+   function generateRandomFigure() {
+       var randomIndex = Math.random() * 7 | 0;
+       switch (randomIndex) {
+           case 0: return figureNS.createFigureI();
+           case 1: return figureNS.createFigureJ();
+           case 2: return figureNS.createFigureL();
+           case 3: return figureNS.createFigureT();
+           case 4: return figureNS.createFigureO();
+           case 5: return figureNS.createFigureS();
+           case 6: return figureNS.createFigureZ();
+           default: throw { message: "Cannot generate random figure" };
+       }
+   }
 })()
