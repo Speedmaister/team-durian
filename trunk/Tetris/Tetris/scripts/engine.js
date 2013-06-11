@@ -1,4 +1,5 @@
-﻿/// <reference path="jQuery-1.10.1.js" />
+﻿/// <reference path="object.js" />
+/// <reference path="jQuery-1.10.1.js" />
 // TODO Game Engine
 var Engine = (function () {
 
@@ -45,10 +46,25 @@ var Engine = (function () {
             var tr = $("<tr>");
             for (j = 0; j < MatrixCols; j++) {
                 var td = $("<td>");
+                td.addClass("empty");
                 td.appendTo(tr);
             }
 
             tr.appendTo(table);
         }
+    }
+
+    function dropFigure() {
+        var I = new figureNS.I();
+        for (var i = 0; i < I.form[0].length; i++) {
+            this.matrix[0][i] = I.form[0][i];
+        }
+        var i = 0;
+        setInterval(function () {
+            for (var j = 0; j < this.matrix[0].length; j++) {
+                this.matrix[i + 1][j] = this.matrix[i][j];
+                this.matrix[i][j] = 0;
+            }
+        }, 1000);
     }
 })()
