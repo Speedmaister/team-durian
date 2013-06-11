@@ -101,4 +101,44 @@ var Engine = (function () {
             default: throw { message: "Cannot generate random figure" };
         }
     }
+
+    function renderMatrix(matrix, table) {
+        var i;
+        var j;
+        for (i = 0; i < matrix.length; i++) {
+            for (j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] != '0') {
+                    var currentTd = table.children()[0].childNodes[i].childNodes[j];
+                    changeTdColor(currentTd, matrix[i][j]);
+                }
+            }
+        }
+    }
+
+    function changeTdColor(td, color) {
+        td = $(td);
+        switch (color) {
+            case 'I':
+                td.css("background-color","lightblue");
+                break;
+            case 'J':
+                td.css("background-color", "blue");
+                break;
+            case 'L':
+                td.css("background-color", "orange");
+                break;
+            case 'O':
+                td.css("background-color", "yellow");
+                break;
+            case 'S':
+                td.css("background-color", "green");
+                break;
+            case 'T':
+                td.css("background-color", "purple");
+                break;
+            case 'Z':
+                td.css("background-color", "red");
+                break;
+        }
+    }
 })()
