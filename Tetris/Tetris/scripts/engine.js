@@ -74,8 +74,11 @@ var Engine = (function () {
             }
         }, 1000);
     }
-    //this.nextFigureMatrix = [];
-    //initializeMatrix(this.nextFigureContainer,)
+    this.nextFigureMatrix = [];
+    initializeMatrix(this.nextFigureMatrix, MatrixNextFigureRows, MatrixNextFigureCols);
+    this.nextFigTablle = $("<table>");
+    initializeTable(this.nextFigTablle, MatrixNextFigureRows, MatrixNextFigureCols);
+    this.nextFigureContainer.append(this.nextFigTablle);
 
    function generateRandomFigure() {
        var randomIndex = Math.random() * 7 | 0;
