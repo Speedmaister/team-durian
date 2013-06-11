@@ -64,34 +64,21 @@ var Engine = (function () {
     (function dropFigure() {
         var figure = figureNS.createFigureT();
         figure.rotate();
-        
-        var allTr = this.table.children()[0].childNodes;
-        for (var j = 0; j < figure.form.length; j++) {
-            for (var i = 0; i < figure.form[j].length; i++) {
-                this.matrix[j][i] = figure.form[j][i];
-                if (figure.form[j][i]!=0) {
-                    var td = allTr[j].childNodes[i];
-                    if (td.className == "empty") {
-                        td.className = "filled";
-                    }
-                }
-                
+        var figPosition = MatrixCols / 2;
+        var row = 0;
+        var col = 0;
+
+        // set figure in the top middle of the matrix
+        for (row = 0; row < figure.length; row++) {
+            for (col = 0; col < figure[row].length; col++) {
+                this.matrix[row][figPosition + col];
             }
         }
 
-        var i = 0;
+
         setInterval(function () {
-            for (var j = 0; j < this.matrix[0].length; j++) {
-                this.matrix[i + 1][j] = this.matrix[i][j];
-                this.matrix[i][j] = 0;
-                var td = allTr[i].childNodes[j];
-                var nextTd = allTr[i + 1].childNodes[j];
-                if (td.className == "filled") {
-                    td.className = "empty";
-                    nextTd.className = "filled";
-                }
-            }
-            i++;
+
+            
         }, 1000);
     })();
 

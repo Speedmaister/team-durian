@@ -55,14 +55,14 @@
 
     var FigureS = $.inherit(Figure, {
         __constructor: function () {
-            var form = [[0, 1, 1], [1, 1, 0]];
+            var form = [["0", "S", "S"], ["S", "S", "0"]];
             this.__base(form);
         }
     });
 
     var FigureT = $.inherit(Figure, {
         __constructor: function () {
-            var form = [[0, 1, 0], [1, 1, 1]];
+            var form = [["0", "T", "0"], ["T", "T", "T"]];
             this.__base(form);
         }
     });
