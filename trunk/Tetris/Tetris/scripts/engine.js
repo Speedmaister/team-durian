@@ -56,7 +56,7 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        var figure = figureNS.createFigureI();
+        var figure = figureNS.createRandomFigure();
         figure.rotate();
         var figPosition = MatrixCols / 2;
         var row = 0;
@@ -87,20 +87,6 @@ var Engine = (function () {
     this.nextFigTablle = $("<table>");
     initializeTable(this.nextFigTablle, MatrixNextFigureRows, MatrixNextFigureCols);
     this.nextFigureContainer.append(this.nextFigTablle);
-
-    function generateRandomFigure() {
-        var randomIndex = Math.random() * 7 | 0;
-        switch (randomIndex) {
-            case 0: return figureNS.createFigureI();
-            case 1: return figureNS.createFigureJ();
-            case 2: return figureNS.createFigureL();
-            case 3: return figureNS.createFigureT();
-            case 4: return figureNS.createFigureO();
-            case 5: return figureNS.createFigureS();
-            case 6: return figureNS.createFigureZ();
-            default: throw { message: "Cannot generate random figure" };
-        }
-    }
 
     function clearCells(table) {
         $("td",table).css("background-color", "white");
