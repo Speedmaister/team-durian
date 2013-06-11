@@ -58,7 +58,9 @@ td {
     height:30px;
 }
 
-#nextFigureContainer table tr .empty{
-    background: yellow;
+
+#nextFigureContainer table tr td {
+    background: none repeat scroll 0 0 yellow;
+    border: 1px solid black;
     height: 20px;
 }
