@@ -85,28 +85,38 @@ var Engine = (function () {
         return copyFig;
     }
     
-    function canFall(currentRow, currentFigure, lastFigure, lastRowIndex, lastColIndex) {
+    function canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex) {
         var row = 0;
         var col = 0;
-        
+
+        for (row = 0; row < lastFigure.length; row++) {
+            for (col = 0; col < lastFigure[row].length; col++) {
+                if (lastFigure[row][col]!=0) {
+                    this.matrix[lastRowIndex + row][lastColIndex + col] = 0;
+                }
+            }
+        }
 
 
         for (col = 0; col < currentFigure[0].length; col++) {
-            row = lastFigure.length - 1;
+            row = currentFigure.length - 1;
 
-            for (row = currentFigure.length - 1; row >= 0; row--) {
-                if (currentFigure[row][col] != 0) {
-
-                    if (currentRow + row + 1 >= MatrixRows || this.matrix[currentRow + row + 1][this.figPosition + col] != 0) {
-                        for (row = 0; row < lastFigure.length; row++) {
-                            for (col = 0; col < lastFigure[row].length; col++) {
-                                this.matrix[lastRowIndex + row][lastColIndex + col] = lastFigure[row][col];
-                            }
-                        }
-                        return false;
-                    }
-                    continue;
+            for (var i = row; i >= 0; i--) {
+                if (currentFigure[i][col] != 0) {
+                    row = i;
+                    break;
                 }
+            }
+
+            if (currentRowIndex + row + 1 >= MatrixRows || this.matrix[currentRowIndex + row + 1][this.figPosition + col] != 0) {
+                for (row = 0; row < lastFigure.length; row++) {
+                    for (col = 0; col < lastFigure[row].length; col++) {
+                        if (lastFigure[row][col] != 0) {
+                            this.matrix[lastRowIndex + row][lastColIndex + col] = lastFigure[row][col];
+                        }
+                    }
+                }
+                return false;
             }
         }
         return true;
@@ -115,8 +125,8 @@ var Engine = (function () {
     (function dropFigure() {
         var row = 0;
         var col = 0;
-        var currentRow = 0;
-        var lastRowIndex = currentRow;
+        var currentRowIndex = 0;
+        var lastRowIndex = currentRowIndex;
         var lastColIndex = this.figPosition;
         var lastFigure = copyFigure(this.figure.form);
         var currentFigure = copyFigure(this.figure.form);
@@ -125,25 +135,18 @@ var Engine = (function () {
             
             currentFigure = copyFigure(this.figure.form);
 
-            if (lastFigure.length + currentRow < MatrixRows) {
-
-                for (row = 0; row < lastFigure.length; row++) {
-                    for (col = 0; col < lastFigure[row].length; col++) {
-                        this.matrix[lastRowIndex + row][lastColIndex + col] = 0;
-                    }
-                }
-
-                currentRow++;
-                for (row = this.figure.form.length - 1; row >= 0; row--) {
-                    for (col = this.figure.form[row].length - 1; col >= 0; col--) {
-                        if (this.figure.form[row][col] != 0) {
-                            this.matrix[currentRow + row][this.figPosition + col] = this.figure.form[row][col];
+            if (canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex)) {
+                currentRowIndex++;
+                for (row = 0; row < currentFigure.length; row++) {
+                    for (col = 0; col < currentFigure[row].length; col++) {
+                        if (currentFigure[row][col] != 0) {
+                            this.matrix[currentRowIndex + row][this.figPosition + col] = currentFigure[row][col];
                         }
                     }
                 }
 
                 lastColIndex = this.figPosition;
-                lastRowIndex = currentRow;
+                lastRowIndex = currentRowIndex;
                 lastFigure = copyFigure(this.figure.form);
                 renderMatrix(this.matrix, this.table);
             }
@@ -152,7 +155,7 @@ var Engine = (function () {
                 //TODO: line check and score update goes here
                 this.figure = figureNS.createRandomFigure();
                 this.figPosition = MatrixCols / 2;
-                if (currentRow == 0) {
+                if (currentRowIndex == 0) {
                     console.log("Game Over");
                 } else {
                     dropFigure();
@@ -160,6 +163,8 @@ var Engine = (function () {
             }
         }, 300)
     })();
+
+
 
     this.nextFigureMatrix = [];
 
