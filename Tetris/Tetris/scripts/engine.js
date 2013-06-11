@@ -109,7 +109,12 @@ var Engine = (function () {
         }
     }
 
+    function clearCells(table) {
+        table.$("td").css("background-color", "white");
+    }
+
     function renderMatrix(matrix, table) {
+        clearCells(table);
         var i;
         var j;
         for (i = 0; i < matrix.length; i++) {
