@@ -42,8 +42,8 @@ var Engine = (function () {
     this.figPosition = MatrixCols / 2;
     this.nextFigure = figureNS.createRandomFigure();
     this.currentFigure;
+    this.score = 0;
     var that = this;
-
 
     function initializeMatrix(matrix, rows, cols) {
         var i;
@@ -70,14 +70,13 @@ var Engine = (function () {
 
     // 32, 37 and 39 are the key codes coresponding to space, left arrow and right arrow
     $("body").keydown(function (event) {
-        console.log("key press " + that.figPosition);
-        if (event.which == 37 && that.figPosition > 0) {
+        if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
         }
-        if (event.which == 39 && that.figPosition + that.currentFigure.form[0].length < MatrixCols) {
+        if (event.which == 39 && canMoveRight()) {
             that.figPosition++;
         }
-        if (event.which == 32 && that.figPosition + that.currentFigure.form.length + 1 < MatrixCols) {
+        if (event.which == 32 && canRotate()) {
             that.currentFigure.rotate();
         }
     });
@@ -93,49 +92,69 @@ var Engine = (function () {
 
         return copyFig;
     }
+
+    function canMoveLeft() {
+        return that.figPosition > 0
+    }
+
+    function canMoveRight() {
+        return that.figPosition + that.currentFigure.form[0].length < MatrixCols;
+    }
+
+    function canRotate() {
+        return this.figPosition + that.currentFigure.form.length - 1 < MatrixCols
+    }
     
     function canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex) {
         var row = 0;
         var col = 0;
 
-        for (row = 0; row < lastFigure.length; row++) {
-            for (col = 0; col < lastFigure[row].length; col++) {
-                if (lastFigure[row][col]!=0) {
-                    this.matrix[lastRowIndex + row][lastColIndex + col] = 0;
-                }
-            }
-        }
-
+        removeFigureFromMatrix(lastFigure, lastRowIndex, lastColIndex);
 
         for (col = 0; col < currentFigure[0].length; col++) {
-            row = currentFigure.length - 1;
-
-            for (var i = row; i >= 0; i--) {
-                if (currentFigure[i][col] != 0) {
-                    row = i;
-                    break;
+            for (row = currentFigure.length - 1; row >= 0; row--) {
+                var isEmpty = currentFigure[row][col] == 0;
+                var isOutsideMatrix = currentRowIndex + row + 1 >= MatrixRows;
+                if (!isEmpty && (isOutsideMatrix || this.matrix[currentRowIndex + row + 1][this.figPosition + col] != 0)) {
+                    placeFigureOnMatrix(lastFigure, lastRowIndex, lastColIndex);
+                    return false;
                 }
-            }
-
-            if (currentRowIndex + row + 1 >= MatrixRows || this.matrix[currentRowIndex + row + 1][this.figPosition + col] != 0) {
-                for (row = 0; row < lastFigure.length; row++) {
-                    for (col = 0; col < lastFigure[row].length; col++) {
-                        if (lastFigure[row][col] != 0) {
-                            this.matrix[lastRowIndex + row][lastColIndex + col] = lastFigure[row][col];
-                        }
-                    }
-                }
-                return false;
             }
         }
+        
         return true;
     }
 
-    (function dropFigure() {
-        this.currentFigure = this.nextFigure;
-        loadNextFigure();
+    function removeFigureFromMatrix(figure, top, left) {
         var row = 0;
         var col = 0;
+        for (row = 0; row < figure.length; row++) {
+            for (col = 0; col < figure[row].length; col++) {
+                if (figure[row][col] != 0) {
+                    this.matrix[top + row][left + col] = 0;
+                }
+            }
+        }
+    }
+
+    function placeFigureOnMatrix(figure, top, left) {
+        var row = 0;
+        var col = 0;
+        for (row = 0; row < figure.length; row++) {
+            for (col = 0; col < figure[row].length; col++) {
+                if (figure[row][col] != 0) {
+                    this.matrix[top + row][left + col] = figure[row][col];
+                }
+            }
+        }
+    }
+
+    (function dropFigure() {
+        this.scoreContainer.text("Score: " + this.score);
+        this.currentFigure = this.nextFigure;
+        this.nextFigure = figureNS.createRandomFigure();
+        rotateAtRandom(this.nextFigure);
+        loadNextFigure();
         var currentRowIndex = 0;
         var lastRowIndex = currentRowIndex;
         var lastColIndex = this.figPosition;
@@ -144,16 +163,10 @@ var Engine = (function () {
 
         var intervalId = setInterval(function () {
             currentFigure = copyFigure(this.currentFigure.form);
-
             if (canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex)) {
                 currentRowIndex++;
-                for (row = 0; row < currentFigure.length; row++) {
-                    for (col = 0; col < currentFigure[row].length; col++) {
-                        if (currentFigure[row][col] != 0) {
-                            this.matrix[currentRowIndex + row][this.figPosition + col] = currentFigure[row][col];
-                        }
-                    }
-                }
+
+                placeFigureOnMatrix(currentFigure, currentRowIndex, this.figPosition);
 
                 lastColIndex = this.figPosition;
                 lastRowIndex = currentRowIndex;
@@ -168,16 +181,79 @@ var Engine = (function () {
                 if (currentRowIndex == 0) {
                     console.log("Game Over");
                 } else {
+                    checkFullForRows();
                     dropFigure();
                 }
             }
         }, 300)
     })();
 
+    function checkFullForRows() {
+        var row = 0;
+        var col = 0;
+        var blockCount = 0;
+        var fullRowsCount = 0;
+        var cleanUpIndexes = [];
+
+        for (row = 0; row < this.matrix.length; row++) {
+            blockCount = 0;
+            for (col = 0; col < this.matrix[row].length; col++) {
+                if (this.matrix[row][col]!= 0) {
+                    blockCount++;
+                }
+            }
+
+            if (blockCount == this.matrix[row].length) {
+                fullRowsCount++;
+                cleanUpIndexes.push(row);
+            }
+        }
+
+        if (fullRowsCount > 0) {
+            cleanUpRows(cleanUpIndexes);
+            this.score += fullRowsCount;
+            console.log("score : " + this.score);
+            console.log("indexes : " + cleanUpIndexes);
+        }
+    }
+
+    function cleanUpRows(cleanUpIndexes) {
+        var i = 0;
+        var row = 0;
+        var col = 0;
+        for (i = 0; i < cleanUpIndexes.length; i++) {
+            row = cleanUpIndexes[i];
+            for (col = 0; col < this.matrix[row].length; col++) {
+                this.matrix[row][col] = 0;
+            }
+            matrixFallDown(row);
+        }
+    }
+
+    function matrixFallDown(index) {
+        var row = 0;
+        var col = 0;
+
+        for (row = index; row > 0; row--) {
+           this.matrix[row] = this.matrix[row - 1]
+        }
+        var topRow = [];
+        for (col = 0; col < this.matrix[0].length; col++) {
+            topRow.push(0);
+        }
+        this.matrix[0] = topRow;
+    }
+
+
+    function rotateAtRandom(figure) {
+        var randomCount = Math.random() * 4 | 0;
+        for (var i = 0; i < randomCount; i++) {
+            figure.rotate();
+        }
+    }
+
 
     function loadNextFigure() {
-        this.nextFigure = figureNS.createRandomFigure();
-
         var i, j;
         var leftPoint = (this.nextFigureMatrix[0].length - this.nextFigure.form[0].length) / 2 | 0;
         var topPoint = (this.nextFigureMatrix.length - this.nextFigure.form.length) / 2 | 0;

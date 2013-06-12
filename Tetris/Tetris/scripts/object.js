@@ -7,29 +7,23 @@
             this.form = form;
         },
         rotate: function () {
+            var i = 0;
+            var j = 0;
+            var rotatedForm = [];
 
-            var rotationCount;
-            var randomRotationCount = (Math.random() * 3 | 0) + 1;
-            for (rotationCount = 0; rotationCount < randomRotationCount; rotationCount++) {
-                var rotatedForm = [];
-                var i = 0;
-                var j = 0;
-
-
-                for (i = this.form[0].length - 1; i >= 0; i--) {
-                    rotatedForm.push([]);
-                }
-
-                for (i = this.form.length - 1; i >= 0; i--) {
-                    for (j = this.form[i].length - 1; j >= 0; j--) {
-                        rotatedForm[j].push(this.form[i][j]);
-                    }
-                }
-
-
-                this.form = rotatedForm;
+            for (i = this.form[0].length - 1; i >= 0; i--) {
+                rotatedForm.push([]);
             }
+
+            for (i = this.form.length - 1; i >= 0; i--) {
+                for (j = this.form[i].length - 1; j >= 0; j--) {
+                    rotatedForm[j].push(this.form[i][j]);
+                }
+            }
+
+            this.form = rotatedForm;
         }
+        
     });
 
     var FigureI = $.inherit(Figure, {
@@ -83,39 +77,25 @@
 
     return {
         createFigureI: function () {
-            var newFig = new FigureI();
-            newFig.rotate();
-            return newFig;
+            return new FigureI();
         },
         createFigureJ: function () {
-            var newFig = new FigureJ();
-            newFig.rotate();
-            return newFig;
+            return new FigureJ();
         },
         createFigureL: function () {
-            var newFig = new FigureL();
-            newFig.rotate();
-            return newFig;
+            return new FigureL();
         },
         createFigureT: function () {
-            var newFig = new FigureT();
-            newFig.rotate();
-            return newFig;
+            return new FigureT();
         },
         createFigureO: function () {
-            var newFig = new FigureO();
-            newFig.rotate();
-            return newFig;
+            return new FigureO();
         },
         createFigureS: function () {
-            var newFig = new FigureS();
-            newFig.rotate();
-            return newFig;
+            return new FigureS();
         },
         createFigureZ: function () {
-            var newFig = new FigureZ();
-            newFig.rotate();
-            return newFig;
+            return new FigureZ();
         },
         createRandomFigure: function () {
             var randomIndex = Math.random() * 7 | 0;
