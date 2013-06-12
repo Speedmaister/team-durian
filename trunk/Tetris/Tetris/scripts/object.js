@@ -7,21 +7,28 @@
             this.form = form;
         },
         rotate: function () {
-            var rotatedForm = [];
-            var i = 0;
-            var j = 0;
 
-            for (i = this.form[0].length - 1; i >= 0; i--) {
-                rotatedForm.push([]);
-            }
+            var rotationCount;
+            var randomRotationCount = (Math.random() * 3 | 0) + 1;
+            for (rotationCount = 0; rotationCount < randomRotationCount; rotationCount++) {
+                var rotatedForm = [];
+                var i = 0;
+                var j = 0;
 
-            for (i = this.form.length - 1; i >= 0; i--) {
-                for (j = this.form[i].length - 1; j >= 0; j--) {
-                    rotatedForm[j].push(this.form[i][j]);
+
+                for (i = this.form[0].length - 1; i >= 0; i--) {
+                    rotatedForm.push([]);
                 }
-            }
 
-            this.form = rotatedForm;
+                for (i = this.form.length - 1; i >= 0; i--) {
+                    for (j = this.form[i].length - 1; j >= 0; j--) {
+                        rotatedForm[j].push(this.form[i][j]);
+                    }
+                }
+
+
+                this.form = rotatedForm;
+            }
         }
     });
 
@@ -76,36 +83,50 @@
 
     return {
         createFigureI: function () {
-            return new FigureI();
+            var newFig = new FigureI();
+            newFig.rotate();
+            return newFig;
         },
         createFigureJ: function () {
-            return new FigureJ()
+            var newFig = new FigureJ();
+            newFig.rotate();
+            return newFig;
         },
         createFigureL: function () {
-            return new FigureL()
+            var newFig = new FigureL();
+            newFig.rotate();
+            return newFig;
         },
         createFigureT: function () {
-            return new FigureT()
+            var newFig = new FigureT();
+            newFig.rotate();
+            return newFig;
         },
         createFigureO: function () {
-            return new FigureO()
+            var newFig = new FigureO();
+            newFig.rotate();
+            return newFig;
         },
         createFigureS: function () {
-            return new FigureS()
+            var newFig = new FigureS();
+            newFig.rotate();
+            return newFig;
         },
         createFigureZ: function () {
-            return new FigureZ()
+            var newFig = new FigureZ();
+            newFig.rotate();
+            return newFig;
         },
         createRandomFigure: function () {
             var randomIndex = Math.random() * 7 | 0;
             switch (randomIndex) {
-                case 0: return new FigureI();
-                case 1: return new FigureJ();
-                case 2: return new FigureL();
-                case 3: return new FigureT();
-                case 4: return new FigureO();
-                case 5: return new FigureS();
-                case 6: return new FigureZ();
+                case 0: return this.createFigureI();
+                case 1: return this.createFigureJ();
+                case 2: return this.createFigureL();
+                case 3: return this.createFigureT();
+                case 4: return this.createFigureO();
+                case 5: return this.createFigureS();
+                case 6: return this.createFigureZ();
                 default: throw { message: "Cannot generate random figure" };
             }
         }
