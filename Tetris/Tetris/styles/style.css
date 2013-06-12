@@ -7,7 +7,7 @@
     padding: 20px;
     width: 420px;
     height: 605px;
-    background-color: red;
+    background-color: black;
 }
 
 ul#statsContainer {
@@ -61,6 +61,5 @@ td {
 
 #nextFigureContainer table tr td {
     background: none repeat scroll 0 0 yellow;
-    border: 1px solid black;
     height: 20px;
 }
