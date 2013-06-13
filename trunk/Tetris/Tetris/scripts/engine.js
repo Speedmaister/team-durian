@@ -95,7 +95,7 @@ var Engine = (function () {
     }
 
     function canMoveLeft() {
-        return that.figPosition > 0
+        return that.figPosition > 0;
     }
 
     function canMoveRight() {
@@ -126,7 +126,6 @@ var Engine = (function () {
                 }
             }
         }
-
         return true;
     }
 
