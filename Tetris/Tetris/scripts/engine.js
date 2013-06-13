@@ -218,7 +218,22 @@ var Engine = (function () {
 
         if (fullRowsCount > 0) {
             cleanUpRows(cleanUpIndexes);
-            this.score += fullRowsCount;
+            //this.score += fullRowsCount;
+            switch (fullRowsCount) {
+                case 1:
+                    this.score += fullRowsCount * 100;
+                    break;
+                case 2:
+                    this.score += fullRowsCount * 120;
+                    break;
+                case 3:
+                    this.score += fullRowsCount * 160;
+                    break;
+                case 4:
+                    this.score += fullRowsCount * 200;
+                    break;
+            }
+
             console.log("score : " + this.score);
             console.log("indexes : " + cleanUpIndexes);
         }
