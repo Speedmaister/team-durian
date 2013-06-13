@@ -45,7 +45,7 @@ var Engine = (function () {
     this.currentFigure;
     this.score = 0;
     var that = this;
-
+    var speed = 300;
     function initializeMatrix(matrix, rows, cols) {
         var i;
         for (i = 0; i < rows; i++) {
@@ -166,7 +166,10 @@ var Engine = (function () {
         var lastFigure = copyFigure(this.currentFigure.form);
         var currentFigure = copyFigure(this.currentFigure.form);
 
-        var intervalId = setInterval(function () {
+
+        intervalId = setInterval(GameLoop, speed);
+
+        function GameLoop() {
             currentFigure = copyFigure(this.currentFigure.form);
             removeFigureFromMatrix(lastFigure, lastRowIndex, lastColIndex);
             if (canFall(currentFigure)) {
@@ -178,8 +181,7 @@ var Engine = (function () {
                 lastRowIndex = this.currentRowIndex;
                 lastFigure = copyFigure(this.currentFigure.form);
                 renderMatrix(this.matrix, this.table);
-            }
-            else {
+            } else {
                 placeFigureOnMatrix(currentFigure, lastRowIndex, lastColIndex);
                 clearInterval(intervalId);
                 //TODO: line check and score update goes here
@@ -192,7 +194,16 @@ var Engine = (function () {
                     dropFigure();
                 }
             }
-        }, 300)
+        }
+
+        $("body").keydown(function (event) {
+            if (event.which == 40) {
+                event.preventDefault();
+                clearInterval(intervalId);
+                intervalId = setInterval(GameLoop, 50);
+            }
+            return false;
+        });
     })();
 
     function checkFullForRows() {
