@@ -184,7 +184,6 @@ var Engine = (function () {
             } else {
                 placeFigureOnMatrix(currentFigure, lastRowIndex, lastColIndex);
                 clearInterval(intervalId);
-                //TODO: line check and score update goes here
                 this.currentFigure = this.nextFigure;
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
@@ -229,7 +228,6 @@ var Engine = (function () {
 
         if (fullRowsCount > 0) {
             cleanUpRows(cleanUpIndexes);
-            //this.score += fullRowsCount;
             switch (fullRowsCount) {
                 case 1:
                     this.score += fullRowsCount * 100;
