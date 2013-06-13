@@ -78,7 +78,6 @@ var Engine = (function () {
             that.figPosition++;
         }
         if (event.which == 32 && canRotate()) {
-            // don't hold the space or press it too many times
             that.currentFigure.rotate();
         }
     });
@@ -109,7 +108,6 @@ var Engine = (function () {
         jQuery.extend(rotatedFigure, this.currentFigure);
         rotatedFigure.rotate();
         var hasColision = !canFall(rotatedFigure.form);
-        placeFigureOnMatrix(this.currentFigure.form, this.currentRowIndex, this.figPosition);
 
         return this.figPosition + rotatedFigure.form.length - 1 < MatrixCols && !hasColision;
 
