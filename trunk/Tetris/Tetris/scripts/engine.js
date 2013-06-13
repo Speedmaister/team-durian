@@ -78,6 +78,7 @@ var Engine = (function () {
             that.figPosition++;
         }
         if (event.which == 32 && canRotate()) {
+            // don't hold the space or press it too many times
             that.currentFigure.rotate();
         }
     });
@@ -181,7 +182,7 @@ var Engine = (function () {
                 renderMatrix(this.matrix, this.table);
             }
             else {
-                placeFigureOnMatrix(lastFigure, lastRowIndex, lastColIndex);
+                placeFigureOnMatrix(currentFigure, lastRowIndex, lastColIndex);
                 clearInterval(intervalId);
                 //TODO: line check and score update goes here
                 this.currentFigure = this.nextFigure;
