@@ -40,6 +40,7 @@ var Engine = (function () {
     this.nextFigureContainer.append(this.nextFigTablle);
 
     this.figPosition = MatrixCols / 2;
+    this.currentRowIndex = 0;
     this.nextFigure = figureNS.createRandomFigure();
     this.currentFigure;
     this.score = 0;
@@ -68,7 +69,7 @@ var Engine = (function () {
         }
     }
 
-    // 32, 37 and 39 are the key codes coresponding to space, left arrow and right arrow
+    // 32, 37 and 39 are the key codes corresponding to space, left arrow and right arrow
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
@@ -102,26 +103,31 @@ var Engine = (function () {
     }
 
     function canRotate() {
-        return this.figPosition + that.currentFigure.form.length - 1 < MatrixCols
+        removeFigureFromMatrix(this.currentFigure.form, this.currentRowIndex, this.figPosition);
+        var rotatedFigure = {};
+        jQuery.extend(rotatedFigure, this.currentFigure);
+        rotatedFigure.rotate();
+        var hasColision = !canFall(rotatedFigure.form);
+        placeFigureOnMatrix(this.currentFigure.form, this.currentRowIndex, this.figPosition);
+
+        return this.figPosition + rotatedFigure.form.length - 1 < MatrixCols && !hasColision;
+
     }
-    
-    function canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex) {
+
+    function canFall(currentFigure) {
         var row = 0;
         var col = 0;
-
-        removeFigureFromMatrix(lastFigure, lastRowIndex, lastColIndex);
 
         for (col = 0; col < currentFigure[0].length; col++) {
             for (row = currentFigure.length - 1; row >= 0; row--) {
                 var isEmpty = currentFigure[row][col] == 0;
-                var isOutsideMatrix = currentRowIndex + row + 1 >= MatrixRows;
-                if (!isEmpty && (isOutsideMatrix || this.matrix[currentRowIndex + row + 1][this.figPosition + col] != 0)) {
-                    placeFigureOnMatrix(lastFigure, lastRowIndex, lastColIndex);
+                var isOutsideMatrix = this.currentRowIndex + row + 1 >= MatrixRows;
+                if (!isEmpty && (isOutsideMatrix || this.matrix[this.currentRowIndex + row + 1][this.figPosition + col] != 0)) {
                     return false;
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -155,30 +161,32 @@ var Engine = (function () {
         this.nextFigure = figureNS.createRandomFigure();
         rotateAtRandom(this.nextFigure);
         loadNextFigure();
-        var currentRowIndex = 0;
-        var lastRowIndex = currentRowIndex;
+        this.currentRowIndex = 0;
+        var lastRowIndex = this.currentRowIndex;
         var lastColIndex = this.figPosition;
         var lastFigure = copyFigure(this.currentFigure.form);
         var currentFigure = copyFigure(this.currentFigure.form);
 
         var intervalId = setInterval(function () {
             currentFigure = copyFigure(this.currentFigure.form);
-            if (canFall(currentFigure, currentRowIndex, lastFigure, lastRowIndex, lastColIndex)) {
-                currentRowIndex++;
+            removeFigureFromMatrix(lastFigure, lastRowIndex, lastColIndex);
+            if (canFall(currentFigure)) {
+                this.currentRowIndex++;
 
-                placeFigureOnMatrix(currentFigure, currentRowIndex, this.figPosition);
+                placeFigureOnMatrix(currentFigure, this.currentRowIndex, this.figPosition);
 
                 lastColIndex = this.figPosition;
-                lastRowIndex = currentRowIndex;
+                lastRowIndex = this.currentRowIndex;
                 lastFigure = copyFigure(this.currentFigure.form);
                 renderMatrix(this.matrix, this.table);
             }
             else {
+                placeFigureOnMatrix(lastFigure, lastRowIndex, lastColIndex);
                 clearInterval(intervalId);
                 //TODO: line check and score update goes here
                 this.currentFigure = this.nextFigure;
                 this.figPosition = MatrixCols / 2;
-                if (currentRowIndex == 0) {
+                if (this.currentRowIndex == 0) {
                     console.log("Game Over");
                 } else {
                     checkFullForRows();
@@ -198,7 +206,7 @@ var Engine = (function () {
         for (row = 0; row < this.matrix.length; row++) {
             blockCount = 0;
             for (col = 0; col < this.matrix[row].length; col++) {
-                if (this.matrix[row][col]!= 0) {
+                if (this.matrix[row][col] != 0) {
                     blockCount++;
                 }
             }
@@ -226,6 +234,7 @@ var Engine = (function () {
             for (col = 0; col < this.matrix[row].length; col++) {
                 this.matrix[row][col] = 0;
             }
+
             matrixFallDown(row);
         }
     }
@@ -235,12 +244,14 @@ var Engine = (function () {
         var col = 0;
 
         for (row = index; row > 0; row--) {
-           this.matrix[row] = this.matrix[row - 1]
+            this.matrix[row] = this.matrix[row - 1]
         }
+
         var topRow = [];
         for (col = 0; col < this.matrix[0].length; col++) {
             topRow.push(0);
         }
+
         this.matrix[0] = topRow;
     }
 
@@ -283,7 +294,7 @@ var Engine = (function () {
         var i;
         var j;
         for (i = 0; i < matrix.length; i++) {
-            for (j = 0; j < matrix[0].length; j++) {
+            for (j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] != '0') {
                     var currentTd = table.children()[0].childNodes[i].childNodes[j];
                     changeTdColor(currentTd, matrix[i][j]);
