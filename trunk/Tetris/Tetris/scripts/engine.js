@@ -1,5 +1,6 @@
-﻿/// <reference path="object.js" />
-/// <reference path="jQuery-1.10.1.js" />
+﻿/// <reference path="jQuery-1.10.1.js" />
+/// <reference path="object.js" />
+/// <reference path="script.js" />
 // TODO Game Engine
 var Engine = (function () {
 
@@ -46,7 +47,7 @@ var Engine = (function () {
     this.score = 0;
     var that = this;
     var speed = 300;
-    var gameOver = false;//add change
+    var gameOver = false;
 
     function initializeMatrix(matrix, rows, cols) {
         var i;
@@ -75,7 +76,7 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
-        } else {//added changes
+        } else {
             return;
         }
     });
@@ -83,7 +84,7 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 39 && canMoveRight()) {
             that.figPosition++;
-        } else {//added changes
+        } else {
             return;
         }
     });
@@ -91,12 +92,10 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 32 && canRotate()) {
             that.currentFigure.rotate();
-        } else {//added changes
+        } else {
             return;
         }
     });
-
-    /////change
 
     function copyFigure(fig) {
         var copyFig = [];
@@ -207,8 +206,6 @@ var Engine = (function () {
                     checkScore(score);
                     gameOver = true;
 
-                    gameOver = true;//add change
-
                     
                 } else {
                     checkFullForRows();
@@ -225,7 +222,7 @@ var Engine = (function () {
                 event.preventDefault();
                 clearInterval(intervalId);
                 intervalId = setInterval(GameLoop, 50);
-            }//added changes
+            }
             else {
                 return;
             }
