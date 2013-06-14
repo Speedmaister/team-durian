@@ -243,7 +243,7 @@ var Engine = (function () {
                 }
                 event.preventDefault();
                 clearInterval(intervalId);
-                intervalId = setInterval(GameLoop, 50);
+                intervalId = setInterval(GameLoop, 20);
             }
             else {
                 return;
