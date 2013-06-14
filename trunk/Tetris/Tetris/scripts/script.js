@@ -1,6 +1,4 @@
 ﻿var tetrisLocalStorage = (function () {
-    var tetrisStorage = $.localStorage;
-
     var storageHTML =
     $("<div id='storage'>" +
       "<label for='playerName'>Player Name</label>" +
@@ -8,30 +6,26 @@
       "<button id='regBtn'>Register</button>"
       + "</div>");
     $("body").append(storageHTML);
-    $("#storage").css("display", "none");
-
-    return {
-        getStorage: tetrisStorage
-    };
+    //  $("#storage").css("display", "none");
 }());
-var scoreStorage = tetrisLocalStorage.getStorage();
+
 
 $("#regBtn").on("click", function () {
-    console.log(scoreStorage);
     var arr = [];
     var playerName = $("#playerName").val();
 
-    scoreStorage.setItem(playerName, score);
+    localStorage.setItem(playerName, score);
 
-    for (var i = 0; i < localStorage.length; i++) {
-        var key = localStorage.key(i);
+    for (var key in localStorage) {
+        var playerScores = localStorage.getItem(key);
+
         var player = {
-            playerScores: scoreStorage.getItem(key),
+            scoreP: playerScores,
             name: key,
         };
         arr.push(player);
     }
-    //console.log(arr);
+
     showList(arr);
 });
 
@@ -41,21 +35,20 @@ function showResults() {
 
 function showList(arr) {
     var sortedList = arr.sort(function (a, b) {
-        return parseInt(a.playerScores) - parseInt(b.playerScores);
+        return parseInt(a.scoreP) - parseInt(b.scoreP);
     });
 
     var resultHTML = $("<ul id='scores'></ul>");
     var counter = 0;
     for (var i = sortedList.length - 1; i >= 0; i--, counter++) {
-        if (counter > 4) {
+        if (counter > 9) {
             break;
         }
         resultHTML.append('<li>'
-            + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
-            + "<span class='playerName'> " + sortedList[i].name + "</span>"
-            + "<span class='playerScores'> " + sortedList[i].playerScores + "  scores" + "<span>"
-            + '</li>');
+                          + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
+                          + "<span class='playerName'> " + sortedList[i].name + "</span>"
+                          + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
+                          + '</li>');
     }
     $("#storage").append(resultHTML);
-
 }
