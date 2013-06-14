@@ -46,8 +46,8 @@ var Engine = (function () {
     this.score = 0;
     var that = this;
     var speed = 300;
-    var gameOver = false;//add change
-
+    var gameOver = false;
+    
     function initializeMatrix(matrix, rows, cols) {
         var i;
         for (i = 0; i < rows; i++) {
@@ -75,7 +75,7 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
-        } else {//added changes
+        } else {
             return;
         }
     });
@@ -83,7 +83,7 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 39 && canMoveRight()) {
             that.figPosition++;
-        } else {//added changes
+        } else {
             return;
         }
     });
@@ -91,12 +91,10 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 32 && canRotate()) {
             that.currentFigure.rotate();
-        } else {//added changes
+        } else {
             return;
         }
     });
-
-    /////change
 
     function copyFigure(fig) {
         var copyFig = [];
@@ -203,8 +201,7 @@ var Engine = (function () {
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
-                    gameOver = true;//add change
-                    showResults();
+                    gameOver = true;
                 } else {
                     checkFullForRows();
                     dropFigure();
@@ -220,7 +217,7 @@ var Engine = (function () {
                 event.preventDefault();
                 clearInterval(intervalId);
                 intervalId = setInterval(GameLoop, 50);
-            }//added changes
+            }
             else {
                 return;
             }
