@@ -8,6 +8,7 @@
     width: 420px;
     height: 605px;
     background-color: black;
+    float: left;
 }
 
 ul#statsContainer {
@@ -65,4 +66,19 @@ td {
 #nextFigureContainer table tr td {
     background: none repeat scroll 0 0 yellow;
     height: 20px;
+}
+/*local storage*/
+#storage {
+    width: 460px;
+    height: 640px;
+    border: 1px solid red;
+    float: left;
+}
+#storage label,#storage input ,#storage button {
+    display: block;
+    margin: 0 auto;
+}
+#storage label {
+    border: 1px solid green;
+    width: 80px;
 }
