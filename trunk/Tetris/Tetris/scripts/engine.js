@@ -203,8 +203,13 @@ var Engine = (function () {
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
+
+                    checkScore(score);
+                    gameOver = true;
+
                     gameOver = true;//add change
-                    showResults();
+
+                    
                 } else {
                     checkFullForRows();
                     dropFigure();
