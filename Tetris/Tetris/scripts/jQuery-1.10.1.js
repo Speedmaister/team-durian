@@ -9930,88 +9930,112 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 
 
 /*!
- * jquery.storage.js 0.0.3 - https://github.com/yckart/jquery.storage.js
- * The client-side storage for every browser, on any device.
- *
- * Copyright (c) 2012 Yannick Albert (http://yckart.com)
- * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php).
- * 2013/02/10
- **/
-; (function ($, window, document) {
-    'use strict';
+* jQuery Plugin to use Local Storage or Session Storage without worrying
+* about HTML5 support. It uses Cookies for backward compatibility.
+*
+* @author Alberto Varela Sánchez (http://www.berriart.com)
+* @version 1.0 (17th January 2013)
+*
+* Released under the MIT License (http://opensource.org/licenses/MIT)
+*
+* Copyright (c) 2013 Alberto Varela Sánchez (alberto@berriart.com)
+*
+* Permission is hereby granted, free of charge, to any person obtaining a
+* copy of this software and associated documentation files (the "Software"),
+* to deal in the Software without restriction, including without limitation
+* the rights to use, copy, modify, merge, publish, distribute, sublicense,
+* and/or sell copies of the Software, and to permit persons to whom the
+* Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
 
-    $.map(['localStorage', 'sessionStorage'], function (method) {
-        var defaults = {
-            cookiePrefix: 'fallback:' + method + ':',
-            cookieOptions: {
-                path: '/',
-                domain: document.domain,
-                expires: ('localStorage' === method) ? { expires: 365 } : undefined
-            }
-        };
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 
+; (function (window, $) {
+    "use strict";
+
+    var types = ['localStorage', 'sessionStorage'],
+        support = [];
+
+    $.each(types, function (i, type) {
         try {
-            $.support[method] = method in window && window[method] !== null;
+            support[type] = type in window && window[type] !== null;
         } catch (e) {
-            $.support[method] = false;
+            support[type] = false;
         }
 
-        $[method] = function (key, value) {
-            var options = $.extend({}, defaults, $[method].options);
+        $[type] = {
+            settings: {
+                cookiePrefix: 'html5fallback:' + type + ':',
+                cookieOptions: {
+                    path: '/',
+                    domain: document.domain,
+                    expires: ('localStorage' === type) ? { expires: 365 } : undefined
+                }
+            },
 
-            this.getItem = function (key) {
-                var returns = function (key) {
-                    return JSON.parse($.support[method] ? window[method].getItem(key) : $.cookie(options.cookiePrefix + key));
-                };
-                if (typeof key === 'string') return returns(key);
+            getItem: function (key) {
+                var response;
+                if (support[type]) {
+                    response = window[type].getItem(key);
+                }
+                else {
+                    response = $.cookie(this.settings.cookiePrefix + key);
+                }
 
-                var arr = [],
-                    i = key.length;
-                while (i--) arr[i] = returns(key[i]);
-                return arr;
-            };
+                return response;
+            },
 
-            this.setItem = function (key, value) {
-                value = JSON.stringify(value);
-                return $.support[method] ? window[method].setItem(key, value) : $.cookie(options.cookiePrefix + key, value, options.cookieOptions);
-            };
+            setItem: function (key, value) {
+                if (support[type]) {
+                    return window[type].setItem(key, value);
+                }
+                else {
+                    return $.cookie(this.settings.cookiePrefix + key, value, this.settings.cookieOptions);
+                }
+            },
 
-            this.removeItem = function (key) {
-                return $.support[method] ? window[method].removeItem(key) : $.cookie(options.cookiePrefix + key, null, $.extend(options.cookieOptions, {
-                    expires: -1
-                }));
-            };
+            removeItem: function (key) {
+                if (support[type]) {
+                    return window[type].removeItem(key);
+                }
+                else {
+                    var options = $.extend(this.settings.cookieOptions, {
+                        expires: -1
+                    });
+                    return $.cookie(this.settings.cookiePrefix + key, null, options);
+                }
+            },
 
-            this.clear = function () {
-                if ($.support[method]) {
-                    return window[method].clear();
-                } else {
-                    var reg = new RegExp('^' + options.cookiePrefix, ''),
-                        opts = $.extend(options.cookieOptions, {
+            clear: function () {
+                if (support[type]) {
+                    return window[type].clear();
+                }
+                else {
+                    var reg = new RegExp('^' + this.settings.cookiePrefix, ''),
+                        options = $.extend(this.settings.cookieOptions, {
                             expires: -1
                         });
 
                     if (document.cookie && document.cookie !== '') {
-                        $.map(document.cookie.split(';'), function (cookie) {
+                        $.each(document.cookie.split(';'), function (i, cookie) {
                             if (reg.test(cookie = $.trim(cookie))) {
-                                $.cookie(cookie.substr(0, cookie.indexOf('=')), null, opts);
+                                $.cookie(cookie.substr(0, cookie.indexOf('=')), null, options);
                             }
                         });
                     }
                 }
-            };
-
-            if (typeof key !== "undefined") {
-                return typeof value !== "undefined" ? (value === null ? this.removeItem(key) : this.setItem(key, value)) : this.getItem(key);
             }
-
-            return this;
         };
-
-        $[method].options = defaults;
     });
-}(jQuery, window, document));
-
-
+})(window, jQuery);
 
 
