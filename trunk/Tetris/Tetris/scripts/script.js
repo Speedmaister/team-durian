@@ -1,20 +1,27 @@
-﻿
+﻿var arr = [];
+
 var tetrisLocalStorage = (function () {
     var storageHTML =
     $("<div id='storage'>" +
+      "<div id='regHolder'>" +
       "<label for='playerName'>Enter Your Name</label>" +
       "<input type='text' name='playerName' id='playerName' placeholder='Name'>" +
-      "<button id='regBtn'>Register</button>"
+      "<button id='regBtn'>Register</button>" +
+      "</div>"
       + "</div>");
     $("body").append(storageHTML);
-   // $("#storage").css("display", "none");
+    $("#regHolder").css("display", "none");
     showList();
 }());
 
 $("#regBtn").on("click", function () {
-    var arr = [];
+    arr = [];
     $("#scores").html("");
     var playerName = $("#playerName").val();
+    if (playerName ==="") {
+        alert("Error");
+        return;
+    }
     localStorage.setItem(playerName, score);
    
     for (var key in localStorage) {
@@ -32,16 +39,35 @@ $("#regBtn").on("click", function () {
     showList();
 });
 
-function showResults() {
-    $("#storage").css("display", "block");
+function checkScore(score) {
+    var sortedList = arr.sort(function (a, b) {
+        return parseInt(a.scoreP) - parseInt(b.scoreP);
+    });
+    console.log(sortedList);
+    if (sortedList.length<1) {
+        $("#regHolder").slideDown("slow");;
+    }
+
+    var counter = 0;
+    for (var i = sortedList.length - 1; i >= 0 ; i--, counter++) {
+        if (counter > 9) {
+            break;
+        }
+        if ((score > parseInt(sortedList[i].scoreP))
+           || sortedList.length < 10)
+           
+        {
+            $("#regHolder").slideDown(1000);
+            break;
+        }
+    }
 }
 
 function showList() {
     $("#scores").html("");
-    var arr = [];
+    arr = [];
     for (var key in localStorage) {
         var playerScores = localStorage.getItem(key);
-
         var player = {
             scoreP: playerScores,
             name: key,
@@ -60,11 +86,11 @@ function showList() {
             break;
         }
         resultHTML.append(
-          '<li>'
+            '<li>'
             + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
             + "<span class='playerName'> " + sortedList[i].name + "</span>"
             + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
-        + '</li>');
+            + '</li>');
     }
     $("#storage").append(resultHTML);
     var time = 0;

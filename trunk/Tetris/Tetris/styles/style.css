@@ -73,6 +73,7 @@ td {
     float: left;
     overflow: hidden;
     background: #5f5e5c;
+    
 }
 
     #storage li {
@@ -130,6 +131,7 @@ td {
     width: 360px;
     margin-left: 25px;
     list-style: none;
+    margin-top: 20px;
 }
 
 .position, .playerName, .playerScores {
