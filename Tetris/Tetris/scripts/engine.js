@@ -229,6 +229,7 @@ var Engine = (function () {
                     renderMatrix(this.matrix, this.table);
                     console.log("Game Over");
                     gameOver = true;
+                //    showResults();
                 } else {
                     checkFullForRows();
                     dropFigure();

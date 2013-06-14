@@ -7,16 +7,17 @@ var tetrisLocalStorage = (function () {
       "<button id='regBtn'>Register</button>"
       + "</div>");
     $("body").append(storageHTML);
-    //  $("#storage").css("display", "none");
-    
+    //$("#storage").css("display", "none");
+ 
     showList();
 }());
 
 $("#regBtn").on("click", function () {
-   var arr = [];
+    var arr = [];
+    $("#scores").html("");
     var playerName = $("#playerName").val();
     localStorage.setItem(playerName, score);
-    $("#scores").html("");
+   
     for (var key in localStorage) {
         var playerScores = localStorage.getItem(key);
 
@@ -26,6 +27,7 @@ $("#regBtn").on("click", function () {
         };
         arr.push(player);
     }
+    $("#playerName").val("");
     $("#regBtn").attr("disabled", true);
     showList();
 });
@@ -64,4 +66,10 @@ function showList() {
                           + '</li>');
     }
     $("#storage").append(resultHTML);
+    var time = 0;
+    $('#storage li').hide().each(function () {
+        $(this).delay(time).fadeIn('slow');
+        time += 200;
+    });
+  
 }
