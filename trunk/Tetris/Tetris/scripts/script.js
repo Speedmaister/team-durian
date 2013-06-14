@@ -1,6 +1,4 @@
-﻿var arr = [];
-
-
+﻿
 var tetrisLocalStorage = (function () {
     var storageHTML =
     $("<div id='storage'>" +
@@ -11,11 +9,11 @@ var tetrisLocalStorage = (function () {
     $("body").append(storageHTML);
     //  $("#storage").css("display", "none");
     
-    showList(arr);
+    showList();
 }());
 
 $("#regBtn").on("click", function () {
-    arr = [];
+   var arr = [];
     var playerName = $("#playerName").val();
     localStorage.setItem(playerName, score);
     $("#scores").html("");
@@ -29,16 +27,16 @@ $("#regBtn").on("click", function () {
         arr.push(player);
     }
     $("#regBtn").attr("disabled", true);
-    showList(arr);
+    showList();
 });
 
 function showResults() {
     $("#storage").css("display", "block");
 }
 
-function showList(arr) {
+function showList() {
     $("#scores").html("");
-    arr = [];
+    var arr = [];
     for (var key in localStorage) {
         var playerScores = localStorage.getItem(key);
 
@@ -56,7 +54,7 @@ function showList(arr) {
     var resultHTML = $("<ul id='scores'></ul>");
     var counter = 0;
     for (var i = sortedList.length - 1; i >= 0; i--, counter++) {
-        if (counter > 9) {
+        if (counter > 5) {
             break;
         }
         resultHTML.append('<li>'
