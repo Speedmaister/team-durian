@@ -46,6 +46,8 @@ var Engine = (function () {
     this.score = 0;
     var that = this;
     var speed = 300;
+    var gameOver = false;//add change
+
     function initializeMatrix(matrix, rows, cols) {
         var i;
         for (i = 0; i < rows; i++) {
@@ -73,14 +75,28 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
-        }
-        if (event.which == 39 && canMoveRight()) {
-            that.figPosition++;
-        }
-        if (event.which == 32 && canRotate()) {
-            that.currentFigure.rotate();
+        } else {//added changes
+            return;
         }
     });
+
+    $("body").keydown(function (event) {
+        if (event.which == 39 && canMoveRight()) {
+            that.figPosition++;
+        } else {//added changes
+            return;
+        }
+    });
+
+    $("body").keydown(function (event) {
+        if (event.which == 32 && canRotate()) {
+            that.currentFigure.rotate();
+        } else {//added changes
+            return;
+        }
+    });
+
+    /////change
 
     function copyFigure(fig) {
         var copyFig = [];
@@ -187,6 +203,8 @@ var Engine = (function () {
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
+                    gameOver = true;//add change
+
                 } else {
                     checkFullForRows();
                     dropFigure();
@@ -196,11 +214,16 @@ var Engine = (function () {
 
         $("body").keydown(function (event) {
             if (event.which == 40) {
+                if (gameOver) {
+                    return;
+                }
                 event.preventDefault();
                 clearInterval(intervalId);
                 intervalId = setInterval(GameLoop, 50);
+            }//added changes
+            else {
+                return;
             }
-            return false;
         });
     })();
 
