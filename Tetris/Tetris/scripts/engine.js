@@ -204,7 +204,7 @@ var Engine = (function () {
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
                     gameOver = true;//add change
-
+                    showResults();
                 } else {
                     checkFullForRows();
                     dropFigure();
