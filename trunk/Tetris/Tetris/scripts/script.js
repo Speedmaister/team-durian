@@ -6,9 +6,8 @@
       "<button id='regBtn'>Register</button>"
       + "</div>");
     $("body").append(storageHTML);
-    //$("#storage").css("display", "none");
+    $("#storage").css("display", "none");
 }());
-
 
 $("#regBtn").on("click", function () {
     var arr = [];
@@ -31,7 +30,7 @@ $("#regBtn").on("click", function () {
 });
 
 function showResults() {
-    $("#storage").css("display", "block");
+    $("#storage").fadeIn();
 }
 
 function showList(arr) {
