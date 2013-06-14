@@ -203,7 +203,7 @@ var Engine = (function () {
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
 
-                    checkScore(score);
+                    TetrisStorage._checkCurrentScore(score);
                     gameOver = true;
 
                     
