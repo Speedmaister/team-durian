@@ -6,7 +6,7 @@
       "<button id='regBtn'>Register</button>"
       + "</div>");
     $("body").append(storageHTML);
-    //  $("#storage").css("display", "none");
+    //$("#storage").css("display", "none");
 }());
 
 
@@ -26,6 +26,7 @@ $("#regBtn").on("click", function () {
         arr.push(player);
     }
 
+    $("#regBtn").prop("disabled", true);
     showList(arr);
 });
 
@@ -47,7 +48,7 @@ function showList(arr) {
         resultHTML.append('<li>'
                           + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
                           + "<span class='playerName'> " + sortedList[i].name + "</span>"
-                          + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
+                          + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores"
                           + '</li>');
     }
     $("#storage").append(resultHTML);
