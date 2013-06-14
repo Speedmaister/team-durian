@@ -46,8 +46,8 @@ var Engine = (function () {
     this.score = 0;
     var that = this;
     var speed = 300;
-    var gameOver = false;
-    
+    var gameOver = false;//add change
+
     function initializeMatrix(matrix, rows, cols) {
         var i;
         for (i = 0; i < rows; i++) {
@@ -71,11 +71,11 @@ var Engine = (function () {
         }
     }
 
-    // 38, 37 and 39 are the key codes corresponding to space, left arrow and right arrow
+    // 32, 37 and 39 are the key codes corresponding to space, left arrow and right arrow
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
-        } else {
+        } else {//added changes
             return;
         }
     });
@@ -83,18 +83,20 @@ var Engine = (function () {
     $("body").keydown(function (event) {
         if (event.which == 39 && canMoveRight()) {
             that.figPosition++;
-        } else {
+        } else {//added changes
             return;
         }
     });
 
     $("body").keydown(function (event) {
-        if (event.which == 38 && canRotate()) {
+        if (event.which == 32 && canRotate()) {
             that.currentFigure.rotate();
-        } else {
+        } else {//added changes
             return;
         }
     });
+
+    /////change
 
     function copyFigure(fig) {
         var copyFig = [];
@@ -107,39 +109,13 @@ var Engine = (function () {
 
         return copyFig;
     }
-    /////////////////
-    function canMoveLeft() {
-        var canMoveLeft = true;
-        if (this.figPosition > 0) {
-            for (var i = 0; i < this.currentFigure.form.length; i++) {
-                if (this.matrix[i + this.currentRowIndex][that.figPosition - 1] != 0 && this.currentFigure.form[i][0] != 0) {
-                    canMoveLeft = false;
-                }
-            }
-        }
-        else {
-            canMoveLeft = false;
-        }
 
-        return canMoveLeft;
+    function canMoveLeft() {
+        return that.figPosition > 0;
     }
 
     function canMoveRight() {
-        var canMoveRight = true;
-        if (that.figPosition + that.currentFigure.form[0].length < MatrixCols) {
-            var lastIndex = this.currentFigure.form[0].length - 1;
-            for (var i = 0; i < this.currentFigure.form.length; i++) {
-                if (this.matrix[i + this.currentRowIndex][that.figPosition + lastIndex + 1] != 0
-                    && this.currentFigure.form[i][lastIndex] != 0) {
-                    canMoveRight = false;
-                }
-            }
-        }
-        else {
-            canMoveRight = false;
-        }
-
-        return canMoveRight;
+        return that.figPosition + that.currentFigure.form[0].length < MatrixCols;
     }
 
     function canRotate() {
@@ -226,9 +202,8 @@ var Engine = (function () {
                 this.currentFigure = this.nextFigure;
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
-                    renderMatrix(this.matrix, this.table);
                     console.log("Game Over");
-                    gameOver = true;
+                    gameOver = true;//add change
                     showResults();
                 } else {
                     checkFullForRows();
@@ -244,8 +219,8 @@ var Engine = (function () {
                 }
                 event.preventDefault();
                 clearInterval(intervalId);
-                intervalId = setInterval(GameLoop, 20);
-            }
+                intervalId = setInterval(GameLoop, 50);
+            }//added changes
             else {
                 return;
             }
