@@ -1,4 +1,7 @@
-﻿var tetrisLocalStorage = (function () {
+﻿var arr = [];
+
+
+var tetrisLocalStorage = (function () {
     var storageHTML =
     $("<div id='storage'>" +
       "<label for='playerName'>Player Name</label>" +
@@ -6,15 +9,36 @@
       "<button id='regBtn'>Register</button>"
       + "</div>");
     $("body").append(storageHTML);
-    $("#storage").css("display", "none");
+    //  $("#storage").css("display", "none");
+    
+    showList(arr);
 }());
 
 $("#regBtn").on("click", function () {
-    var arr = [];
+    arr = [];
     var playerName = $("#playerName").val();
-
     localStorage.setItem(playerName, score);
+    $("#scores").html("");
+    for (var key in localStorage) {
+        var playerScores = localStorage.getItem(key);
 
+        var player = {
+            scoreP: playerScores,
+            name: key,
+        };
+        arr.push(player);
+    }
+    $("#regBtn").attr("disabled", true);
+    showList(arr);
+});
+
+function showResults() {
+    $("#storage").css("display", "block");
+}
+
+function showList(arr) {
+    $("#scores").html("");
+    arr = [];
     for (var key in localStorage) {
         var playerScores = localStorage.getItem(key);
 
@@ -25,15 +49,6 @@ $("#regBtn").on("click", function () {
         arr.push(player);
     }
 
-    $("#regBtn").prop("disabled", true);
-    showList(arr);
-});
-
-function showResults() {
-    $("#storage").fadeIn();
-}
-
-function showList(arr) {
     var sortedList = arr.sort(function (a, b) {
         return parseInt(a.scoreP) - parseInt(b.scoreP);
     });
@@ -47,7 +62,7 @@ function showList(arr) {
         resultHTML.append('<li>'
                           + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
                           + "<span class='playerName'> " + sortedList[i].name + "</span>"
-                          + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores"
+                          + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
                           + '</li>');
     }
     $("#storage").append(resultHTML);
