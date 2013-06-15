@@ -74,6 +74,78 @@ describe("object", function () {
         });
     });
 
+    describe("createFigureJ", function () {
+        it("initialize figureJ", function () {
+            var figureJ = figureNS.createFigureJ();
+            var expected = [["J", 0, 0], ["J", "J", "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ one time", function () {
+            var figureJ = figureNS.createFigureJ();
+            figureJ.rotate();
+            var expected = [["J", "J"], ["J", 0], ["J", 0]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ two times", function () {
+            var figureJ = figureNS.createFigureJ();
+            var rotationCount = 2;
+            for (var i = 0; i < rotationCount; i++) {
+                figureJ.rotate();
+            }
+            var expected = [["J", "J", "J"], [0, 0, "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ three times", function () {
+            var figureJ = figureNS.createFigureJ();
+            var rotationCount = 3;
+            for (var i = 0; i < rotationCount; i++) {
+                figureJ.rotate();
+            }
+            var expected = [[0,"J"], [0,"J"], ["J", "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ four times", function () {
+            var figureJ = figureNS.createFigureJ();
+            var rotationCount = 4;
+            for (var i = 0; i < rotationCount; i++) {
+                figureJ.rotate();
+            }
+            var expected = [["J", 0, 0], ["J", "J", "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ 15 times", function () {
+            var figureJ = figureNS.createFigureJ();
+            var rotationCount = 15;
+            for (var i = 0; i < rotationCount; i++) {
+                figureJ.rotate();
+            }
+            var expected = [[0, "J"], [0, "J"], ["J", "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureJ 16 times", function () {
+            var figureJ = figureNS.createFigureJ();
+            var rotationCount = 16;
+            for (var i = 0; i < rotationCount; i++) {
+                figureJ.rotate();
+            }
+            var expected = [["J", 0, 0], ["J", "J", "J"]];
+            var actual = figureJ.form;
+            expect(actual).toEqual(expected);
+        });
+    });
+
     describe("createFigureL", function () {
         it("initialize figureL", function () {
             var figureL = figureNS.createFigureL();
@@ -145,8 +217,78 @@ describe("object", function () {
             var actual = figureL.form;
             expect(actual).toEqual(expected);
         });
+    });
 
+    describe("createFigureS", function () {
+        it("initialize figureS", function () {
+            var figureS = figureNS.createFigureS();
+            var expected = [[0, "S", "S"], ["S", "S", 0]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
 
+        it("rotate figureS one time", function () {
+            var figureS = figureNS.createFigureS();
+            figureS.rotate();
+            var expected = [["S", 0], ["S", "S"], [0,"S"]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureS two times", function () {
+            var figureS = figureNS.createFigureS();
+            var rotationCount = 2;
+            for (var i = 0; i < rotationCount; i++) {
+                figureS.rotate();
+            }
+            var expected = [[0, "S", "S"], ["S", "S", 0]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureS three times", function () {
+            var figureS = figureNS.createFigureS();
+            var rotationCount = 3;
+            for (var i = 0; i < rotationCount; i++) {
+                figureS.rotate();
+            }
+            var expected = [["S", 0], ["S", "S"], [0, "S"]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureS four times", function () {
+            var figureS = figureNS.createFigureS();
+            var rotationCount = 4;
+            for (var i = 0; i < rotationCount; i++) {
+                figureS.rotate();
+            }
+            var expected = [[0, "S", "S"], ["S", "S", 0]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureS 15 times", function () {
+            var figureS = figureNS.createFigureS();
+            var rotationCount = 15;
+            for (var i = 0; i < rotationCount; i++) {
+                figureS.rotate();
+            }
+            var expected = [["S", 0], ["S", "S"], [0, "S"]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureS 16 times", function () {
+            var figureS = figureNS.createFigureS();
+            var rotationCount = 16;
+            for (var i = 0; i < rotationCount; i++) {
+                figureS.rotate();
+            }
+            var expected = [[0, "S", "S"], ["S", "S", 0]];
+            var actual = figureS.form;
+            expect(actual).toEqual(expected);
+        });
     });
 
     describe("createFigureT", function () {
@@ -289,6 +431,78 @@ describe("object", function () {
             }
             var expected = [["O", "O"], ["O", "O"]];
             var actual = figureO.form;
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("createFigureZ", function () {
+        it("initialize figureZ", function () {
+            var figureZ = figureNS.createFigureZ();
+            var expected = [["Z", "Z", 0], [0, "Z", "Z"]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ one time", function () {
+            var figureZ = figureNS.createFigureZ();
+            figureZ.rotate();
+            var expected = [[0, "Z"], ["Z", "Z"], ["Z", 0]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ two times", function () {
+            var figureZ = figureNS.createFigureZ();
+            var rotationCount = 2;
+            for (var i = 0; i < rotationCount; i++) {
+                figureZ.rotate();
+            }
+            var expected = [["Z", "Z", 0], [0, "Z", "Z"]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ three times", function () {
+            var figureZ = figureNS.createFigureZ();
+            var rotationCount = 3;
+            for (var i = 0; i < rotationCount; i++) {
+                figureZ.rotate();
+            }
+            var expected = [[0, "Z"], ["Z", "Z"], ["Z", 0]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ four times", function () {
+            var figureZ = figureNS.createFigureZ();
+            var rotationCount = 4;
+            for (var i = 0; i < rotationCount; i++) {
+                figureZ.rotate();
+            }
+            var expected = [["Z", "Z", 0], [0, "Z", "Z"]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ 15 times", function () {
+            var figureZ = figureNS.createFigureZ();
+            var rotationCount = 15;
+            for (var i = 0; i < rotationCount; i++) {
+                figureZ.rotate();
+            }
+            var expected = [[0, "Z"],["Z", "Z"], ["Z", 0]];
+            var actual = figureZ.form;
+            expect(actual).toEqual(expected);
+        });
+
+        it("rotate figureZ 16 times", function () {
+            var figureZ = figureNS.createFigureZ();
+            var rotationCount = 16;
+            for (var i = 0; i < rotationCount; i++) {
+                figureZ.rotate();
+            }
+            var expected = [["Z", "Z", 0], [0, "Z", "Z"]];
+            var actual = figureZ.form;
             expect(actual).toEqual(expected);
         });
     });
