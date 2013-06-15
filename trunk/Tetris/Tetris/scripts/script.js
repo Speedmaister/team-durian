@@ -1,6 +1,6 @@
-﻿var TetrisStorage = (function() {
+﻿var TetrisStorage = (function () {
     var arr = [];
-    this._tetrisLocalStorage = function() {
+    this._tetrisLocalStorage = function () {
         var storageHTML =
         $("<div id='storage'>" +
           "<div id='regHolder'>" +
@@ -15,7 +15,7 @@
     };
 
     var addPlayer = function () {
-        $("#regBtn").on("click", function() {
+        $("#regBtn").on("click", function () {
             arr = [];
             $("#scores").html("");
             var playerName = $("#playerName").val();
@@ -24,7 +24,7 @@
                     "<div class='arrow-right'></div>" +
                     "Please fill out this field." +
                     "</div>");
-           
+
                 return;
             }
             else {
@@ -41,6 +41,7 @@
             else {
                 $(".error").remove();
             }
+
             localStorage.setItem(playerName, score);
 
             for (var key in localStorage) {
@@ -51,7 +52,7 @@
                 };
                 arr.push(player);
             }
-            
+
             $("#playerName").val("");
             $("#regBtn").attr("disabled", true);
             $("#regBtn").css({
@@ -64,10 +65,10 @@
     };
 
     this._checkCurrentScore = function (score) {
-        var sortedList = arr.sort(function(a, b) {
+        var sortedList = arr.sort(function (a, b) {
             return parseInt(a.scoreP) - parseInt(b.scoreP);
         });
-        
+
         if (sortedList.length < 1) {
             $("#regHolder").slideDown("slow");
             addPlayer();
@@ -85,10 +86,10 @@
                 addPlayer();
                 break;
             }
-        }   
+        }
     };
 
-    var showList = function() {
+    var showList = function () {
         $("#scores").html("");
         arr = [];
         for (var key in localStorage) {
@@ -97,10 +98,13 @@
                 scoreP: playerScores,
                 name: key,
             };
-            arr.push(player);
+            if (isFinite(player.scoreP)) {
+                arr.push(player);
+            }
+
         }
 
-        var sortedList = arr.sort(function(a, b) {
+        var sortedList = arr.sort(function (a, b) {
             return parseInt(a.scoreP) - parseInt(b.scoreP);
         });
 
@@ -121,7 +125,7 @@
         $("#storage").append(resultHtml);
 
         var time = 0;
-        $('#storage li').hide().each(function() {
+        $('#storage li').hide().each(function () {
             $(this).delay(time).fadeIn('slow');
             time += 200;
         });
@@ -129,7 +133,7 @@
 
     return {
         _getTetrisStrage: _tetrisLocalStorage,
-        _checkCurrentScore:_checkCurrentScore
+        _checkCurrentScore: _checkCurrentScore
     };
 }());
 
