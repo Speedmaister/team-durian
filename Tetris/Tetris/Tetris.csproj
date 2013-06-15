@@ -62,7 +62,7 @@
     <Content Include="scripts\engine.js" />
     <Content Include="scripts\object-tests.js" />
     <Content Include="scripts\object.js" />
-    <Content Include="scripts\storage.js" />
+    <Content Include="scripts\script.js" />
     <Content Include="styles\style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
