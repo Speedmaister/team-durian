@@ -222,7 +222,7 @@ var Engine = (function () {
                 lastFigure = copyFigure(this.currentFigure.form);
                 renderMatrix(this.matrix, this.table);
             } else {
-                placeFigureOnMatrix(currentFigure, lastRowIndex, lastColIndex);
+                placeFigureOnMatrix(currentFigure, lastRowIndex, this.figPosition);
                 clearInterval(intervalId);
                 this.currentFigure = this.nextFigure;
                 this.figPosition = MatrixCols / 2;
