@@ -73,7 +73,7 @@ td {
     float: left;
     overflow: hidden;
     background: #5f5e5c;
-    
+    position: relative;
 }
 
     #storage li {
@@ -161,4 +161,31 @@ td {
     color: #262626;
     width: 170px;
     background: #ffb800;
+}
+
+.error {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid white;
+    border-radius: 20px 20px 20px 20px;
+    color: red;
+    font-family: comic sans ms;
+    font-weight: bold;
+    left: 39px;
+    position: absolute;
+    text-align: center;
+    top: 31px;
+    width: 88px; 
+    padding: 5px;
+}
+
+.arrow-right {
+    border-bottom: 12px solid transparent;
+    border-left: 20px solid white;
+    border-top: 14px solid transparent;
+    height: 0;
+    left: 91px;
+    position: absolute;
+    top: 20px;
+    width: 0;
+
 }
