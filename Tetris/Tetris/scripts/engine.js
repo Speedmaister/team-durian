@@ -110,11 +110,37 @@ var Engine = (function () {
     }
 
     function canMoveLeft() {
-        return that.figPosition > 0;
+        var canMoveLeft = true;
+        if (this.figPosition > 0) {
+            for (var i = 0; i < this.currentFigure.form.length; i++) {
+                if (this.matrix[i + this.currentRowIndex][that.figPosition - 1] != 0 && this.currentFigure.form[i][0] != 0) {
+                    canMoveLeft = false;
+                }
+            }
+        }
+        else {
+            canMoveLeft = false;
+        }
+
+        return canMoveLeft;
     }
 
     function canMoveRight() {
-        return that.figPosition + that.currentFigure.form[0].length < MatrixCols;
+        var canMoveRight = true;
+        if (that.figPosition + that.currentFigure.form[0].length < MatrixCols) {
+            var lastIndex = this.currentFigure.form[0].length - 1;
+            for (var i = 0; i < this.currentFigure.form.length; i++) {
+                if (this.matrix[i + this.currentRowIndex][that.figPosition + lastIndex + 1] != 0
+                    && this.currentFigure.form[i][lastIndex] != 0) {
+                    canMoveRight = false;
+                }
+            }
+        }
+        else {
+            canMoveRight = false;
+        }
+
+        return canMoveRight;
     }
 
     function canRotate() {
@@ -202,11 +228,11 @@ var Engine = (function () {
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
                     console.log("Game Over");
-
+                    renderMatrix(this.matrix, this.table);
                     TetrisStorage._checkCurrentScore(score);
                     gameOver = true;
 
-                    
+
                 } else {
                     checkFullForRows();
                     dropFigure();
