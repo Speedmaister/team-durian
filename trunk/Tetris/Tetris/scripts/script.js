@@ -21,8 +21,25 @@ var TetrisStorage = (function() {
             $("#scores").html("");
             var playerName = $("#playerName").val();
             if (playerName === "") {
-                alert("Error");
+                $("#playerName").after("<div class='error'>" +
+                    "<div class='arrow-right'></div>" +
+                    "Please fill out this field." +
+                    "</div>");
+           
                 return;
+            }
+            else {
+                $(".error").remove();
+            }
+            if (playerName.length < 4) {
+                $("#playerName").after("<div class='error'>" +
+                    "<div class='arrow-right'></div>" +
+                    "Name must contains more than 3 letters." +
+                    "</div>");
+                return;
+            }
+            else {
+                $(".error").remove();
             }
             localStorage.setItem(playerName, score);
 
