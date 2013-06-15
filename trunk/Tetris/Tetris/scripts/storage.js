@@ -1,7 +1,6 @@
-﻿
-var TetrisStorage = (function() {
+﻿var TetrisStorage = (function () {
     var arr = [];
-    this._tetrisLocalStorage = function() {
+    this._tetrisLocalStorage = function () {
         var storageHTML =
         $("<div id='storage'>" +
           "<div id='regHolder'>" +
@@ -16,7 +15,7 @@ var TetrisStorage = (function() {
     };
 
     var addPlayer = function () {
-        $("#regBtn").on("click", function() {
+        $("#regBtn").on("click", function () {
             arr = [];
             $("#scores").html("");
             var playerName = $("#playerName").val();
@@ -25,12 +24,13 @@ var TetrisStorage = (function() {
                     "<div class='arrow-right'></div>" +
                     "Please fill out this field." +
                     "</div>");
-           
+
                 return;
             }
             else {
                 $(".error").remove();
             }
+
             if (playerName.length < 4) {
                 $("#playerName").after("<div class='error'>" +
                     "<div class='arrow-right'></div>" +
@@ -41,6 +41,7 @@ var TetrisStorage = (function() {
             else {
                 $(".error").remove();
             }
+
             localStorage.setItem(playerName, score);
 
             for (var key in localStorage) {
@@ -51,7 +52,7 @@ var TetrisStorage = (function() {
                 };
                 arr.push(player);
             }
-            
+
             $("#playerName").val("");
             $("#regBtn").attr("disabled", true);
             $("#regBtn").css({
@@ -64,10 +65,10 @@ var TetrisStorage = (function() {
     };
 
     this._checkCurrentScore = function (score) {
-        var sortedList = arr.sort(function(a, b) {
+        var sortedList = arr.sort(function (a, b) {
             return parseInt(a.scoreP) - parseInt(b.scoreP);
         });
-        
+
         if (sortedList.length < 1) {
             $("#regHolder").slideDown("slow");
             addPlayer();
@@ -78,16 +79,17 @@ var TetrisStorage = (function() {
             if (counter > 9) {
                 break;
             }
+
             if ((score > parseInt(sortedList[i].scoreP))
                 || sortedList.length < 10) {
                 $("#regHolder").slideDown(1000);
                 addPlayer();
                 break;
             }
-        }   
+        }
     };
 
-    var showList = function() {
+    var showList = function () {
         $("#scores").html("");
         arr = [];
         for (var key in localStorage) {
@@ -99,7 +101,7 @@ var TetrisStorage = (function() {
             arr.push(player);
         }
 
-        var sortedList = arr.sort(function(a, b) {
+        var sortedList = arr.sort(function (a, b) {
             return parseInt(a.scoreP) - parseInt(b.scoreP);
         });
 
@@ -109,6 +111,7 @@ var TetrisStorage = (function() {
             if (counter > 9) {
                 break;
             }
+
             resultHtml.append(
              '<li>'
                 + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
@@ -116,10 +119,11 @@ var TetrisStorage = (function() {
                 + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
            + '</li>');
         }
+
         $("#storage").append(resultHtml);
 
         var time = 0;
-        $('#storage li').hide().each(function() {
+        $('#storage li').hide().each(function () {
             $(this).delay(time).fadeIn('slow');
             time += 200;
         });
@@ -127,9 +131,10 @@ var TetrisStorage = (function() {
 
     return {
         _getTetrisStrage: _tetrisLocalStorage,
-        _checkCurrentScore:_checkCurrentScore
+        _checkCurrentScore: _checkCurrentScore
     };
 }());
+
 TetrisStorage._getTetrisStrage();
 
 
