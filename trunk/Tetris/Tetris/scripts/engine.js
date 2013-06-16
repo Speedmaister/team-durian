@@ -1,14 +1,8 @@
 ﻿/// <reference path="jQuery-1.10.1.js" />
 /// <reference path="object.js" />
 /// <reference path="script.js" />
-// TODO Game Engine
-
-if (!window.console) window.console = {};
-if (!window.console.log) window.console.log = function () { };
 
 var Engine = (function () {
-
-    //Constants
     var MatrixRows = 20;
     var MatrixCols = 10;
     var MatrixNextFigureRows = 5;
@@ -157,7 +151,7 @@ var Engine = (function () {
     }
 
     function canRotate() {
-        removeFigureFromMatrix(this.currentFigure.form, this.currentRowIndex, this.figPosition);
+        removeFigureFromMatrix(this.matrix, this.currentFigure.form, this.currentRowIndex, this.figPosition);
         var rotatedFigure = {};
         jQuery.extend(rotatedFigure, this.currentFigure);
         rotatedFigure.rotate();
@@ -183,31 +177,31 @@ var Engine = (function () {
         return true;
     }
 
-    function removeFigureFromMatrix(figure, top, left) {
+    function removeFigureFromMatrix(matrix, figure, top, left) {
         var row = 0;
         var col = 0;
         for (row = 0; row < figure.length; row++) {
             for (col = 0; col < figure[row].length; col++) {
                 if (figure[row][col] != 0) {
-                    this.matrix[top + row][left + col] = 0;
+                    matrix[top + row][left + col] = 0;
                 }
             }
         }
     }
 
-    function placeFigureOnMatrix(figure, top, left) {
+    function placeFigureOnMatrix(matrix, figure, top, left) {
         var row = 0;
         var col = 0;
         for (row = 0; row < figure.length; row++) {
             for (col = 0; col < figure[row].length; col++) {
                 if (figure[row][col] != 0) {
-                    this.matrix[top + row][left + col] = figure[row][col];
+                    matrix[top + row][left + col] = figure[row][col];
                 }
             }
         }
     }
 
-    function dropFigure() {
+    function startGame() {
         this.scoreTd.html(this.score);
         this.currentFigure = this.nextFigure;
         this.nextFigure = figureNS.createRandomFigure();
@@ -219,36 +213,33 @@ var Engine = (function () {
         var lastFigure = copyFigure(this.currentFigure.form);
         var currentFigure = copyFigure(this.currentFigure.form);
 
-
         intervalId = setInterval(GameLoop, speed);
 
         function GameLoop() {
             currentFigure = copyFigure(this.currentFigure.form);
-            removeFigureFromMatrix(lastFigure, lastRowIndex, lastColIndex);
+            removeFigureFromMatrix(this.matrix, lastFigure, lastRowIndex, lastColIndex);
             if (canFall(currentFigure)) {
                 this.currentRowIndex++;
 
-                placeFigureOnMatrix(currentFigure, this.currentRowIndex, this.figPosition);
+                placeFigureOnMatrix(this.matrix, currentFigure, this.currentRowIndex, this.figPosition);
 
                 lastColIndex = this.figPosition;
                 lastRowIndex = this.currentRowIndex;
                 lastFigure = copyFigure(this.currentFigure.form);
                 renderMatrix(this.matrix, this.table);
             } else {
-                placeFigureOnMatrix(currentFigure, lastRowIndex, this.figPosition);
+                placeFigureOnMatrix(this.matrix, currentFigure, lastRowIndex, this.figPosition);
                 clearInterval(intervalId);
                 this.currentFigure = this.nextFigure;
                 this.figPosition = MatrixCols / 2;
                 if (this.currentRowIndex == 0) {
-                    console.log("Game Over");
                     renderMatrix(this.matrix, this.table);
                     TetrisStorage._checkCurrentScore(score);
                     gameOver = true;
 
-
                 } else {
                     checkFullForRows();
-                    dropFigure();
+                    startGame();
                 }
             }
         }
@@ -306,9 +297,6 @@ var Engine = (function () {
                     this.score += fullRowsCount * 200;
                     break;
             }
-
-            console.log("score : " + this.score);
-            console.log("indexes : " + cleanUpIndexes);
         }
     }
 
@@ -419,7 +407,11 @@ var Engine = (function () {
 
     return {
         startGame: function () {
-            dropFigure();
-        }
+            startGame();
+        },
+        initializeMatrix: initializeMatrix,
+        copyFigure: copyFigure,
+        removeFigureFromMatrix: removeFigureFromMatrix,
+        placeFigureOnMatrix: placeFigureOnMatrix,
     }
 })()
