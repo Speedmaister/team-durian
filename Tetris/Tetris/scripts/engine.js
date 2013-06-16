@@ -2,6 +2,10 @@
 /// <reference path="object.js" />
 /// <reference path="script.js" />
 // TODO Game Engine
+
+if (!window.console) window.console = {};
+if (!window.console.log) window.console.log = function () { };
+
 var Engine = (function () {
 
     //Constants
@@ -245,6 +249,7 @@ var Engine = (function () {
                 if (gameOver) {
                     return;
                 }
+
                 event.preventDefault();
                 clearInterval(intervalId);
                 intervalId = setInterval(GameLoop, 50);
