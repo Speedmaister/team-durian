@@ -20,11 +20,11 @@
 
         !function (d, s, id) {
             var js,
-                fjs = d.getElementsByTagName(s)[0],
+                fjs = $(s)[0],
                 p = /^http:/.test(d.location) ? 'http' : 'https';
 
             if (!d.getElementById(id)) {
-                var twitterButton = d.getElementsByClassName('twitter-hashtag-button')[0];
+                var twitterButton = $('.twitter-hashtag-button')[0];
                 var text = "Just got " + score + " points on";
                 twitterButton.href += "&text=" + text;
 
@@ -139,9 +139,10 @@
              '<li>'
                 + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
                 + "<span class='playerName'> " + sortedList[i].name + "</span>"
-                + "<span class='playerScores'> " + sortedList[i].scoreP + "  points" + "<span>"
+                + "<span class='playerScores'> " + sortedList[i].scoreP + "  points" + "</span>"
            + '</li>');
         }
+
         $("#storage").append(resultHtml);
 
         var time = 0;
