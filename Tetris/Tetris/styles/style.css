@@ -33,10 +33,28 @@ li#nextFigureContainer {
 }
 
 li#scoreContainer {
-    width: 100px;
-    height: 50px;
+    color: black;
     background-color: orange;
+    padding-left:27px;
 }
+
+    li#scoreContainer table {
+        border-collapse: collapse;
+    }
+
+        li#scoreContainer table th {
+            font-family: Comic Sans MS;
+        }
+
+        li#scoreContainer table td {
+            text-align:center;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background-color: orange;
+            border: none;
+            font-family: Comic Sans MS;
+        }
 
 li#levelContainer {
     width: 100px;
