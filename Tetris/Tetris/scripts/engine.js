@@ -26,9 +26,6 @@ var Engine = (function () {
     this.scoreContainer.attr("id", "scoreContainer");
     this.scoreTd = initializeScoreTable(this.scoreContainer);
 
-    //this.levelContainer = $("<li>");
-    //this.levelContainer.attr("id", "levelContainer");
-
     this.statsContainer.append(this.nextFigureContainer, this.scoreContainer, this.levelContainer);
     this.container.append(this.tableContainer, this.statsContainer);
 
@@ -88,7 +85,7 @@ var Engine = (function () {
         }
     }
 
-    // 32, 37 and 39 are the key codes corresponding to space, left arrow and right arrow
+    // 38, 37 and 39 are the key codes corresponding to up, left arrow and right arrow
     $("body").keydown(function (event) {
         if (event.which == 37 && canMoveLeft()) {
             that.figPosition--;
@@ -106,7 +103,7 @@ var Engine = (function () {
     });
 
     $("body").keydown(function (event) {
-        if (event.which == 32 && canRotate()) {
+        if (event.which == 38 && canRotate()) {
             that.currentFigure.rotate();
         } else {
             return;
@@ -210,7 +207,7 @@ var Engine = (function () {
         }
     }
 
-    (function dropFigure() {
+    function dropFigure() {
         this.scoreTd.html(this.score);
         this.currentFigure = this.nextFigure;
         this.nextFigure = figureNS.createRandomFigure();
@@ -270,7 +267,7 @@ var Engine = (function () {
                 return;
             }
         });
-    })();
+    };
 
     function checkFullForRows() {
         var row = 0;
@@ -417,6 +414,12 @@ var Engine = (function () {
             case 'Z':
                 td.css("background-color", "red");
                 break;
+        }
+    }
+
+    return {
+        startGame: function () {
+            dropFigure();
         }
     }
 })()
