@@ -195,7 +195,7 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        this.scoreContainer.text("Score: " + this.score);
+        this.scoreContainer.html("Score:  " + this.score);
         this.currentFigure = this.nextFigure;
         this.nextFigure = figureNS.createRandomFigure();
         rotateAtRandom(this.nextFigure);

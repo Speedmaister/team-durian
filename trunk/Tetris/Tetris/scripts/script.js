@@ -7,6 +7,7 @@
           "<label for='playerName'>Enter Your Name</label>" +
           "<input type='text' name='playerName' id='playerName' placeholder='Name'>" +
           "<button id='regBtn'>Register</button>" +
+          "<a href='https://twitter.com/intent/tweet?button_hashtag=Tetris' class='twitter-hashtag-button'>Tweet #Tetris</a>" +
           "</div>"
           + "</div>");
         $("body").append(storageHTML);
@@ -15,6 +16,24 @@
     };
 
     var addPlayer = function () {
+
+        !function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0],
+                p = /^http:/.test(d.location) ? 'http' : 'https';
+
+            if (!d.getElementById(id)) {
+                var twitterButton = d.getElementsByClassName('twitter-hashtag-button')[0];
+                var text = "Just got " + score + " points on";
+                twitterButton.href += "&text=" + text;
+
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + '://platform.twitter.com/widgets.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, 'script', 'twitter-wjs');
+
         $("#regBtn").on("click", function () {
             arr = [];
             $("#scores").html("");
@@ -119,7 +138,7 @@
              '<li>'
                 + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
                 + "<span class='playerName'> " + sortedList[i].name + "</span>"
-                + "<span class='playerScores'> " + sortedList[i].scoreP + "  scores" + "<span>"
+                + "<span class='playerScores'> " + sortedList[i].scoreP + "  points" + "<span>"
            + '</li>');
         }
         $("#storage").append(resultHtml);
@@ -138,6 +157,3 @@
 }());
 
 TetrisStorage._getTetrisStrage();
-
-
-
