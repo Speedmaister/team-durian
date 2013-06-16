@@ -211,3 +211,7 @@ td {
     position: relative;
     left: 40%;
 }
+
+#playerName {
+    text-align:center;
+}

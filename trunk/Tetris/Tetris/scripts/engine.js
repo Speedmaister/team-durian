@@ -26,8 +26,8 @@ var Engine = (function () {
     this.scoreContainer.attr("id", "scoreContainer");
     this.scoreTd = initializeScoreTable(this.scoreContainer);
 
-    this.levelContainer = $("<li>");
-    this.levelContainer.attr("id", "levelContainer");
+    //this.levelContainer = $("<li>");
+    //this.levelContainer.attr("id", "levelContainer");
 
     this.statsContainer.append(this.nextFigureContainer, this.scoreContainer, this.levelContainer);
     this.container.append(this.tableContainer, this.statsContainer);
