@@ -9,6 +9,7 @@
           "<button id='regBtn'>Register</button>" +
           "<a href='https://twitter.com/intent/tweet?button_hashtag=Tetris' class='twitter-hashtag-button'>Tweet #Tetris</a>" +
           "</div>"
+
           + "</div>");
         $("body").append(storageHTML);
         $("#regHolder").css("display", "none");
@@ -39,9 +40,10 @@
             $("#scores").html("");
             var playerName = $("#playerName").val();
             if (playerName === "") {
-                $("#playerName").after("<div class='error'>" +
-                    "<div class='arrow-right'></div>" +
-                    "Please fill out this field." +
+                $("#playerName").after(
+                    "<div class='error'>" +
+                        "<div class='arrow-right'></div>" +
+                        "Please fill out this field." +
                     "</div>");
 
                 return;
@@ -133,7 +135,6 @@
             if (counter > 9) {
                 break;
             }
-
             resultHtml.append(
              '<li>'
                 + "<span class='position'>" + "Place " + (counter + 1) + "</span>"
