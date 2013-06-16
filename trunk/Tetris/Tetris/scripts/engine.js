@@ -24,6 +24,8 @@ var Engine = (function () {
     this.nextFigureContainer.attr("id", "nextFigureContainer");
     this.scoreContainer = $("<li>");
     this.scoreContainer.attr("id", "scoreContainer");
+    this.scoreTd = initializeScoreTable(this.scoreContainer);
+
     this.levelContainer = $("<li>");
     this.levelContainer.attr("id", "levelContainer");
 
@@ -52,6 +54,16 @@ var Engine = (function () {
     var that = this;
     var speed = 300;
     var gameOver = false;
+
+    function initializeScoreTable(container) {
+        var table = $("<table>");
+        table.append($("<tr>").append($("<th>").text("Score")));
+        var scoreTd = $("<td>");
+        scoreTd.attr("id", "scoreTd");
+        table.append($("<tr>").append(scoreTd));
+        container.append(table);
+        return scoreTd;
+    }
 
     function initializeMatrix(matrix, rows, cols) {
         var i;
@@ -199,7 +211,7 @@ var Engine = (function () {
     }
 
     (function dropFigure() {
-        this.scoreContainer.html("Score:  " + this.score);
+        this.scoreTd.html(this.score);
         this.currentFigure = this.nextFigure;
         this.nextFigure = figureNS.createRandomFigure();
         rotateAtRandom(this.nextFigure);
