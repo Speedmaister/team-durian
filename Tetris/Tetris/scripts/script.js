@@ -117,7 +117,7 @@
                 scoreP: playerScores,
                 name: key,
             };
-            if (isFinite(player.scoreP)) {
+            if (isFinite(player.scoreP) && player.scoreP !== null) {
                 arr.push(player);
             }
 
