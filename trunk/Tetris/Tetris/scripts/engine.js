@@ -43,7 +43,7 @@ var Engine = (function () {
     this.currentFigure;
     this.score = 0;
     var that = this;
-    var speed = 300;
+    var speed = 250;
     var gameOver = false;
 
     function initializeScoreTable(container) {
